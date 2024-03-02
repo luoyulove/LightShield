@@ -1,2 +1,3 @@
-package luoyu.lightshield.Client;public class ClientShield {
+package luoyu.lightshield.Client;
+public class ClientShield {
 }

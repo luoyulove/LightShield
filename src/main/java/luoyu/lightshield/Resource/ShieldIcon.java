@@ -8,7 +8,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
 
-public class ClientEvents {
+public class ShieldIcon {
     @Mod.EventBusSubscriber(modid = LightShield.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientModBusEvents {
         public static final ResourceLocation FILLED_SHIELD = new ResourceLocation(LightShield.MOD_ID,
