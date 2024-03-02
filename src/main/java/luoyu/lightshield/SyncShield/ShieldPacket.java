@@ -1,37 +1,41 @@
-//package luoyu.lightshield.SyncShield;
-//
-//import commonnetwork.Constants;
-//import luoyu.lightshield.PlayerShield;
-//import net.minecraft.client.Minecraft;
-//import net.minecraft.network.FriendlyByteBuf;
-//import commonnetwork.networking.data.PacketContext;
-//import commonnetwork.networking.data.Side;
-//import net.minecraft.resources.ResourceLocation;
-//import net.minecraft.world.entity.player.Player;
-//
-//import java.util.UUID;
-//
-//public class ShieldPacket {
-//    public static final ResourceLocation CHANNEL = new ResourceLocation(Constants.MOD_ID, "shield_channel");
-//    private float shieldAmount;
-//    private UUID player_uuid;
-//
-//    public ShieldPacket(float shieldAmount, UUID player_uuid){
-//        this.shieldAmount = shieldAmount;
-//        this.player_uuid = player_uuid;
-//    }
-//    public static ShieldPacket fromBytes(FriendlyByteBuf buf){
-//        return new ShieldPacket(buf.readFloat(), buf.readUUID());
-//    }
-//    public static void shieldAmountencode(ShieldPacket packet, FriendlyByteBuf buf){
-//        buf.writeFloat(packet.shieldAmount);
-//        buf.writeUUID(packet.player_uuid);
-//    }
-//    public void handle(PacketContext<ShieldPacket> shieldPacket){
-//        if(shieldPacket.side() == Side.SERVER){
-//            float shieldAmount = shieldPacket.message().shieldAmount;
-//            Player player = Minecraft.getInstance().player;
-//            PlayerShield.getPlayerShield(player).setShieldAmount(shieldAmount);
-//        }
-//    }
-//}
+package luoyu.lightshield.SyncShield;
+
+import luoyu.lightshield.LightShield;
+import luoyu.lightshield.PlayerShield;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.social.PlayerEntry;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.network.ServerPlayerConnection;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.handlers.ServerPayloadHandler;
+import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+
+import javax.swing.text.html.parser.Entity;
+
+public record ShieldPacket(float shield_amount) implements CustomPacketPayload {
+
+    public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shield_amount");
+
+    public ShieldPacket(final FriendlyByteBuf buffer) {
+        this(buffer.readFloat());
+    }
+    @Override
+    public void write(final FriendlyByteBuf buffer) {
+        buffer.writeFloat(shield_amount);
+    }
+
+    @Override
+    public ResourceLocation id() {
+        return ID;
+    }
+    @SubscribeEvent
+    public static void registerPacketPayload(final RegisterPayloadHandlerEvent event) {
+        final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
+        registrar.play(ShieldPacket.ID, ShieldPacket::new, handler -> handler
+                .client(ClientPayloadHandler.getInstance()::handleData));
+    }
+}

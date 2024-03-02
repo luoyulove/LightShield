@@ -1,12 +1,15 @@
 package luoyu.lightshield;
 
 import luoyu.lightshield.Enchantment.EnchantInit;
+import luoyu.lightshield.SyncShield.ShieldPacket;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +37,6 @@ public class PlayerShield {
         }
         return PlayerShieldMap.get(playerUUID);
     }
-
     @SubscribeEvent
     public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
         if (!event.side.isClient() && getPlayerShield(event.player).shieldAmount < getPlayerShield(event.player).maxShieldAmount) {
@@ -43,6 +45,7 @@ public class PlayerShield {
                 float shieldRegen = shieldRegenAmount(event.player);
                 float newShieldAmount = Math.min(playerShield.shieldAmount + shieldRegen, playerShield.getMaxShieldAmount());
                 playerShield.setShieldAmount(newShieldAmount);
+                new ShieldPacket(playerShield.shieldAmount);
             }
         }
     }
@@ -66,7 +69,6 @@ public class PlayerShield {
         }
         this.maxShieldAmount = 4 + enchantmentLevel;
     }
-
     public float getShieldAmount() {
         return this.shieldAmount;
     }
@@ -77,13 +79,4 @@ public class PlayerShield {
     public float setShieldAmount(float shieldAmount) {
         return this.shieldAmount = shieldAmount;
     }
-//    public void writeToBuffer(ByteBuf buf){
-//        buf.writeFloat(this.shieldAmount);
-//    }
-//    public static void onShieldPacket(ShieldPacket packet){
-//        Minecraft mc = Minecraft.getInstance();
-//        if(mc.player != null){
-//            PlayerShield.getPlayerShield(mc.player);
-//        }
-//    }
 }

@@ -6,11 +6,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import static luoyu.lightshield.Resource.ShieldIcon.ClientModBusEvents.FILLED_SHIELD;
 public class ShieldHudOverlay {
     public static Player getPlayer(){
-        return Minecraft.getInstance().player;
+        return ShieldHudOverlay.getOnlinePlayer(Minecraft.getInstance().player);
+    }
+    public static Player getOnlinePlayer(Player player){
+        PlayerShield.getPlayerShield(player);
+        return player;
     }
     public static final IGuiOverlay HUD_SHIELD = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;
