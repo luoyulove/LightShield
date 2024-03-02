@@ -1,0 +1,4 @@
+{
+    "enchantment.lightshield.shield_regen": "ShieldRegen",
+    "enchantment.lightshield.shield_regen.desc": "Shield recovery increases by 0.25 each time"
+}
