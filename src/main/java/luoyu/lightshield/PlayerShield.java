@@ -1,18 +1,12 @@
 package luoyu.lightshield;
 
-import io.netty.buffer.ByteBuf;
 import luoyu.lightshield.Enchantment.EnchantInit;
-import luoyu.lightshield.SyncShield.ShieldPacket;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
-import net.minecraft.network.ConnectionProtocol;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +18,6 @@ public class PlayerShield {
     private final Player player;
     private float maxShieldAmount;
     private float shieldAmount;
-    public static Enchantment shield_regen;
 
     public PlayerShield(Player player) {
         this.player = player;
@@ -32,7 +25,6 @@ public class PlayerShield {
         this.maxShieldAmount = 10;
         this.refreshPlayerMaxShield();
     }
-
     public static PlayerShield getPlayerShield(Player player) {
         UUID playerUUID = player.getUUID();
         if (!PlayerShieldMap.containsKey(playerUUID)) {
@@ -44,18 +36,18 @@ public class PlayerShield {
     }
 
     @SubscribeEvent
-    public static void ShieldRegen(TickEvent.PlayerTickEvent event) {
+    public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
         if (!event.side.isClient() && getPlayerShield(event.player).shieldAmount < getPlayerShield(event.player).maxShieldAmount) {
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
                 PlayerShield playerShield = getPlayerShield(event.player);
-                float shieldRegen = ShieldRegenAmount(event.player);
+                float shieldRegen = shieldRegenAmount(event.player);
                 float newShieldAmount = Math.min(playerShield.shieldAmount + shieldRegen, playerShield.getMaxShieldAmount());
                 playerShield.setShieldAmount(newShieldAmount);
             }
         }
     }
 
-    public static float ShieldRegenAmount(Player player) {
+    public static float shieldRegenAmount(Player player) {
         int enchantmentLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.getType() == EquipmentSlot.Type.ARMOR) {
@@ -85,13 +77,13 @@ public class PlayerShield {
     public float setShieldAmount(float shieldAmount) {
         return this.shieldAmount = shieldAmount;
     }
-    public void writeToBuffer(ByteBuf buf){
-        buf.writeFloat(this.shieldAmount);
-    }
-    public static void onShieldPacket(ShieldPacket packet){
-        Minecraft mc = Minecraft.getInstance();
-        if(mc.player != null){
-            PlayerShield.getPlayerShield(mc.player);
-        }
-    }
+//    public void writeToBuffer(ByteBuf buf){
+//        buf.writeFloat(this.shieldAmount);
+//    }
+//    public static void onShieldPacket(ShieldPacket packet){
+//        Minecraft mc = Minecraft.getInstance();
+//        if(mc.player != null){
+//            PlayerShield.getPlayerShield(mc.player);
+//        }
+//    }
 }
