@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
 
-import static luoyu.lightshield.Resource.ClientEvents.ClientModBusEvents.FILLED_SHIELD;
+import static luoyu.lightshield.Resource.ShieldIcon.ClientModBusEvents.FILLED_SHIELD;
 public class ShieldHudOverlay {
     public static Player getPlayer(){
         return Minecraft.getInstance().player;
