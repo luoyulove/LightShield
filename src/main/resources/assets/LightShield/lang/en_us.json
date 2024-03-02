@@ -1,0 +1,7 @@
+{
+    "enchantment.lightshield.shield_regen": "shield_regen",
+    "enchantment.lightshield.shield_regen.desc": "Increase shield recovery by 0.25 points per level",
+
+    "enchantment.lightshield.max_shield": "max_shield",
+    "enchantment.lightshield.max_shield.desc": "Increase Shield limit"
+}

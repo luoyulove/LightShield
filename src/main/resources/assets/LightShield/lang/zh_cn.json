@@ -1,0 +1,7 @@
+{
+    "enchantment.lightshield.shield_regen": "充能护盾",
+    "enchantment.lightshield.shield_regen.desc": "增加单次护盾恢复量，每级增加 0.25 点",
+
+    "enchantment.lightshield.max_shield": "强化护盾",
+    "enchantment.lightshield.max_shield.desc": "增加护盾上限，每级增加 1 点"
+}
