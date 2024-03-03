@@ -45,7 +45,13 @@ public class PlayerShield {
                 float shieldRegen = shieldRegenAmount(event.player);
                 float newShieldAmount = Math.min(playerShield.shieldAmount + shieldRegen, playerShield.getMaxShieldAmount());
                 playerShield.setShieldAmount(newShieldAmount);
-                new ShieldPacket(playerShield.shieldAmount);
+
+                float updatedShieldValue = newShieldAmount;
+                ServerPlayer serverPlayer = (ServerPlayer) event.player;
+                ShieldPacket packet = new ShieldPacket(updatedShieldValue, serverPlayer.getUUID());
+
+                PacketDistributor.PacketTarget target = PacketDistributor.PLAYER.with(serverPlayer);
+                target.send(packet);
             }
         }
     }
