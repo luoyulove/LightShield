@@ -62,7 +62,6 @@ public class PlayerShield {
                 float shieldRegen = shieldRegenAmount(event.player);
                 float newShieldAmount = Math.min(playerShield.shieldAmount + shieldRegen, playerShield.getMaxShieldAmount());
                 playerShield.setShieldAmount(newShieldAmount);
-                ShieldHudOverlay.updateShieldCount(event.player, newShieldAmount);
             }
         }
     }

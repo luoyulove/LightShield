@@ -18,13 +18,6 @@ public class ShieldHudOverlay {
         PlayerShield.getPlayerShield(player);
         return player;
     }
-    public static int updateShieldCount(Player player, float newShieldAmount) {
-        int shieldCount = (int) (newShieldAmount / 2);
-        if (shieldCount > 10) {
-            shieldCount = 10;
-        }
-        return shieldCount;
-    }
     public static final IGuiOverlay HUD_SHIELD = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;
         int y = screenHeight;
@@ -34,10 +27,7 @@ public class ShieldHudOverlay {
             return;
         }
 
-//        int shieldCount = (int) (PlayerShield.getPlayerShield(getPlayer()).getShieldAmount() / 2);
-//        int shieldCount = (int) (PlayerShield.getPlayerShield(ShieldHudOverlay.getOnlinePlayer(getPlayer())).getShieldAmount() / 2);
-        float newShieldAmount = PlayerShield.getPlayerShield(player).getShieldAmount();
-        int shieldCount = updateShieldCount(player, newShieldAmount);
+        int shieldCount = (int) (PlayerShield.getPlayerShield(player).getShieldAmount() / 2);
         if (shieldCount > 10) {
             shieldCount = 10;
         }
