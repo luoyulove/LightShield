@@ -56,7 +56,6 @@ public class PlayerShield {
 
     @SubscribeEvent
     public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
-        Player Eventplayer = event.player;
         if (!event.side.isClient() && getPlayerShield(event.player).shieldAmount < getPlayerShield(event.player).maxShieldAmount) {
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
                 PlayerShield playerShield = getPlayerShield(event.player);
