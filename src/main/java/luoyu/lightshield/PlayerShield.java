@@ -88,9 +88,9 @@ public class PlayerShield {
         return shieldAmount;
     }
 
-    public record shieldData(float shieldAmount) implements CustomPacketPayload {
+    public record ShieldData(float shieldAmount) implements CustomPacketPayload {
         public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
-        public shieldData(final FriendlyByteBuf buffer) {
+        public ShieldData(final FriendlyByteBuf buffer) {
             this(buffer.readFloat());
         }
         @Override
@@ -105,7 +105,7 @@ public class PlayerShield {
         @SubscribeEvent
         public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
             final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
-            registrar.play(shieldData.ID, shieldData::new, handler -> handler
+            registrar.play(ShieldData.ID, ShieldData::new, handler -> handler
                     .client(luoyu.lightshield.ShieldPayload.ClientPayloadHandler.getInstance()::handleData));
         }
     }

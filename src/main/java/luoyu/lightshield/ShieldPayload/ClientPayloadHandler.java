@@ -15,9 +15,9 @@ public class ClientPayloadHandler {
         return INSTANCE;
     }
 
-    public void handleData(final PlayerShield.shieldData data, final PlayPayloadContext context) {
-        float shieldAmount = data.shieldAmount();
+    public void handleData(final PlayerShield.ShieldData shielddata, final PlayPayloadContext context) {
         Player player = context.player().get();
+        float shieldAmount = PlayerShield.getPlayerShield(player).getShieldAmount();
 
         context.workHandler().submitAsync(() -> {
                     PlayerShield playerShield = PlayerShield.getPlayerShield(player);
