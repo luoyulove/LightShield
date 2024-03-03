@@ -1,30 +1,17 @@
 package luoyu.lightshield;
 
-import com.mojang.logging.LogUtils;
 import luoyu.lightshield.Enchantment.EnchantInit;
-import luoyu.lightshield.ShieldHUD.ShieldHudOverlay;
-import luoyu.lightshield.ShieldPayload.ClientPayloadHandler;
-import luoyu.lightshield.ShieldPayload.ShieldPacket;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.handlers.ServerPayloadHandler;
-import net.neoforged.neoforge.network.handling.ISynchronizedWorkHandler;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
-import net.neoforged.neoforge.network.registration.NetworkChannel;
-import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
