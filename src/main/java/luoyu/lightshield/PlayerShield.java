@@ -2,6 +2,7 @@ package luoyu.lightshield;
 
 import com.mojang.logging.LogUtils;
 import luoyu.lightshield.Enchantment.EnchantInit;
+import luoyu.lightshield.ShieldHUD.ShieldHudOverlay;
 import luoyu.lightshield.ShieldPayload.ClientPayloadHandler;
 import luoyu.lightshield.ShieldPayload.ShieldPacket;
 import net.minecraft.client.Minecraft;
@@ -55,16 +56,17 @@ public class PlayerShield {
 
     @SubscribeEvent
     public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
+        Player Eventplayer = event.player;
         if (!event.side.isClient() && getPlayerShield(event.player).shieldAmount < getPlayerShield(event.player).maxShieldAmount) {
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
                 PlayerShield playerShield = getPlayerShield(event.player);
                 float shieldRegen = shieldRegenAmount(event.player);
                 float newShieldAmount = Math.min(playerShield.shieldAmount + shieldRegen, playerShield.getMaxShieldAmount());
                 playerShield.setShieldAmount(newShieldAmount);
+                ShieldHudOverlay.updateShieldCount(event.player, newShieldAmount);
             }
         }
     }
-
     public static float shieldRegenAmount(Player player) {
         int enchantmentLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
