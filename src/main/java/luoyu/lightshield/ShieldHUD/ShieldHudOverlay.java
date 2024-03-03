@@ -28,7 +28,8 @@ public class ShieldHudOverlay {
         }
 
 //        int shieldCount = (int) (PlayerShield.getPlayerShield(getPlayer()).getShieldAmount() / 2);
-        int shieldCount = (int) (PlayerShield.getPlayerShield(ShieldHudOverlay.getOnlinePlayer(getPlayer())).getShieldAmount() / 2);
+//        int shieldCount = (int) (PlayerShield.getPlayerShield(ShieldHudOverlay.getOnlinePlayer(getPlayer())).getShieldAmount() / 2);
+        int shieldCount = (int) (ClientPayloadHandler.shieldAmount / 2);
         if (shieldCount > 10) {
             shieldCount = 10;
         }

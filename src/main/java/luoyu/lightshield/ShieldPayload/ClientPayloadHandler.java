@@ -9,7 +9,7 @@ import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 import static com.mojang.text2speech.Narrator.LOGGER;
 
 public class ClientPayloadHandler {
-
+    public static float shieldAmount;
     private static final ClientPayloadHandler INSTANCE = new ClientPayloadHandler();
 
     public static ClientPayloadHandler getInstance() {
@@ -17,12 +17,12 @@ public class ClientPayloadHandler {
     }
 
     public void handleData(final PlayerShield.shieldData data, final PlayPayloadContext context) {
-        float shieldAmount = data.shieldAmount();
+        shieldAmount = data.shieldAmount();
         Player player = context.player().get();
 
         context.workHandler().submitAsync(() -> {
                     PlayerShield playerShield = PlayerShield.getPlayerShield(player);
-                    playerShield.setShieldAmount(shieldAmount);
+                    playerShield.getShieldAmount();
                     System.out.println(shieldAmount);
                     LOGGER.info(String.valueOf(shieldAmount));
                 })
