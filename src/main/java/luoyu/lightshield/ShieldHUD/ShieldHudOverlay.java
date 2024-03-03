@@ -26,6 +26,7 @@ public class ShieldHudOverlay {
             return;
         }
 
+//        int shieldCount = (int) (PlayerShield.getPlayerShield(getPlayer()).getShieldAmount() / 2);
         int shieldCount = (int) (PlayerShield.getPlayerShield(getPlayer()).getShieldAmount() / 2);
         if (shieldCount > 10) {
             shieldCount = 10;

@@ -1,48 +1,40 @@
 package luoyu.lightshield.SyncShield;
 
-import io.netty.channel.pool.SimpleChannelPool;
 import luoyu.lightshield.LightShield;
+import luoyu.lightshield.PlayerShield;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.PacketListener;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.handling.IPacketHandler;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
-import java.util.UUID;
+public record ShieldPacket(float shieldAmount) implements CustomPacketPayload {
 
-public class ShieldPacket implements CustomPacketPayload {
-    private float shieldAmount;
-    private UUID player_uuid;
+    public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldAmount");
 
-    public ShieldPacket(float shieldAmount, UUID player_uuid) {
-        this.shieldAmount = shieldAmount;
-        this.player_uuid = player_uuid;
+    public ShieldPacket(final FriendlyByteBuf buffer) {
+        this(buffer.readFloat());
     }
-
-    public static ShieldPacket fromBytes(FriendlyByteBuf buf) {
-        return new ShieldPacket(buf.readFloat(), buf.readUUID());
-    }
-
     @Override
-    public void write(FriendlyByteBuf buf) {
-        buf.writeFloat(this.shieldAmount);
-        buf.writeUUID(this.player_uuid);
+    public void write(final FriendlyByteBuf buffer) {
+        buffer.writeFloat(shieldAmount);
     }
 
     @Override
     public ResourceLocation id() {
-        return new ResourceLocation(LightShield.MOD_ID, "shield_amount");
+        return ID;
     }
-
-    public float getShieldAmount() {
-        return shieldAmount;
+    @SubscribeEvent
+    public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
+        final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
+        registrar.play(ShieldPacket.ID, ShieldPacket::new, handler -> handler
+                .client(ClientPayloadHandler.getInstance()::handleData));
     }
-
-    public UUID getPlayerUUID() {
-        return player_uuid;
+    public static void registerClientPayload(RegisterPayloadHandlerEvent event){
+        final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
+        registrar.play(ShieldPacket.ID, ShieldPacket::new, handler ->
+                handler.client(ClientPayloadHandler.getInstance()::handleData));
     }
 }
