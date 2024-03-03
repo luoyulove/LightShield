@@ -1,4 +1,4 @@
-package luoyu.lightshield.SyncShield;
+package luoyu.lightshield.ShieldPayload;
 
 import luoyu.lightshield.LightShield;
 import luoyu.lightshield.PlayerShield;
@@ -12,7 +12,7 @@ import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
 public record ShieldPacket(float shieldAmount) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldAmount");
+    public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
 
     public ShieldPacket(final FriendlyByteBuf buffer) {
         this(buffer.readFloat());
@@ -30,11 +30,6 @@ public record ShieldPacket(float shieldAmount) implements CustomPacketPayload {
     public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
         final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
         registrar.play(ShieldPacket.ID, ShieldPacket::new, handler -> handler
-                .client(ClientPayloadHandler.getInstance()::handleData));
-    }
-    public static void registerClientPayload(RegisterPayloadHandlerEvent event){
-        final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
-        registrar.play(ShieldPacket.ID, ShieldPacket::new, handler ->
-                handler.client(ClientPayloadHandler.getInstance()::handleData));
+                .client(luoyu.lightshield.ShieldPayload.ClientPayloadHandler.getInstance()::handleData));
     }
 }

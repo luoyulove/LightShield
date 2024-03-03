@@ -1,8 +1,8 @@
 package luoyu.lightshield;
 
+import com.mojang.logging.LogUtils;
 import luoyu.lightshield.Enchantment.EnchantInit;
-import luoyu.lightshield.SyncShield.ClientPayloadHandler;
-import luoyu.lightshield.SyncShield.ShieldPacket;
+import luoyu.lightshield.ShieldPayload.ShieldPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -16,7 +16,10 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
+import net.neoforged.neoforge.network.handlers.ServerPayloadHandler;
+import net.neoforged.neoforge.network.handling.ISynchronizedWorkHandler;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import org.slf4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +55,9 @@ public class PlayerShield {
                 float shieldRegen = shieldRegenAmount(event.player);
                 float newShieldAmount = Math.min(playerShield.shieldAmount + shieldRegen, playerShield.getMaxShieldAmount());
                 playerShield.setShieldAmount(newShieldAmount);
+
+                ServerPlayer player = (ServerPlayer) event.player;
+                ShieldPacket packet = new ShieldPacket(newShieldAmount);
             }
         }
     }
@@ -76,7 +82,7 @@ public class PlayerShield {
         this.maxShieldAmount = 4 + enchantmentLevel;
     }
     public float getShieldAmount() {
-        return this.shieldAmount;
+        return shieldAmount;
     }
 
     public float getMaxShieldAmount() {
@@ -84,14 +90,5 @@ public class PlayerShield {
     }
     public float setShieldAmount(float shieldAmount) {
         return this.shieldAmount = shieldAmount;
-    }
-    public static void sendShieldUpdateToClient(ServerPlayer player, float shieldAmount) {
-        ShieldPacket packet = new ShieldPacket(shieldAmount);
-    }
-    public void handleData(ShieldPacket packet) {
-        float shieldAmountFromPacket = packet.shieldAmount();
-        Player clientPlayer = Minecraft.getInstance().player;
-        PlayerShield playerShield = PlayerShield.getPlayerShield(clientPlayer);
-        playerShield.setShieldAmount(shieldAmountFromPacket);
     }
 }

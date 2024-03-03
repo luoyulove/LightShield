@@ -2,6 +2,7 @@ package luoyu.lightshield.ShieldHUD;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import luoyu.lightshield.PlayerShield;
+import luoyu.lightshield.ShieldPayload.ClientPayloadHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +28,7 @@ public class ShieldHudOverlay {
         }
 
 //        int shieldCount = (int) (PlayerShield.getPlayerShield(getPlayer()).getShieldAmount() / 2);
-        int shieldCount = (int) (PlayerShield.getPlayerShield(getPlayer()).getShieldAmount() / 2);
+        int shieldCount = (int) (PlayerShield.getPlayerShield(ShieldHudOverlay.getOnlinePlayer(getPlayer())).getShieldAmount() / 2);
         if (shieldCount > 10) {
             shieldCount = 10;
         }
