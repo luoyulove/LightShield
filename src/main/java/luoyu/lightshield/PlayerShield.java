@@ -52,6 +52,7 @@ public class PlayerShield {
             }
         }
     }
+
     public static float shieldRegenAmount(Player player) {
         int enchantmentLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -72,8 +73,8 @@ public class PlayerShield {
         this.maxShieldAmount = 4 + enchantmentLevel;
     }
 
-    public float getShieldAmount() {
-        return shieldAmount;
+    public  float getShieldAmount() {
+        return this.shieldAmount;
     }
 
     public float getMaxShieldAmount() {
@@ -83,30 +84,33 @@ public class PlayerShield {
     public float setShieldAmount(float shieldAmount) {
         return this.shieldAmount = shieldAmount;
     }
-
-    public float shieldAmount() {
-        return shieldAmount;
+    public ShieldData toShieldData() {
+        return new ShieldData(this.getShieldAmount());
     }
 
+    @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.MOD)
     public record ShieldData(float shieldAmount) implements CustomPacketPayload {
         public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
+
         public ShieldData(final FriendlyByteBuf buffer) {
             this(buffer.readFloat());
         }
         @Override
         public void write(final FriendlyByteBuf buffer) {
-            buffer.writeFloat(shieldAmount);
+            buffer.writeFloat(this.shieldAmount);
         }
 
         @Override
         public ResourceLocation id() {
             return ID;
         }
+
         @SubscribeEvent
         public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
             final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
-            registrar.play(ShieldData.ID, ShieldData::new, handler -> handler
-                    .client(luoyu.lightshield.ShieldPayload.ClientPayloadHandler.getInstance()::handleData));
+            registrar.play(ShieldData.ID, PlayerShield.ShieldData::new, handler -> handler
+                    .client(luoyu.lightshield.ShieldPayload.ClientPayloadHandler.getClient()::handleData)
+                    .server(luoyu.lightshield.ShieldPayload.ServerPayloadHandler.getServer()::handleData));
         }
     }
 }

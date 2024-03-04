@@ -11,12 +11,12 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import static luoyu.lightshield.Resource.ShieldIcon.ClientModBusEvents.FILLED_SHIELD;
 public class ShieldHudOverlay {
+    private static float ClientShieldAmount;
     public static Player getPlayer(){
-        return ShieldHudOverlay.getOnlinePlayer(Minecraft.getInstance().player);
+        return Minecraft.getInstance().player;
     }
-    public static Player getOnlinePlayer(Player player){
-        PlayerShield.getPlayerShield(player);
-        return player;
+    public void setShieldAmount(float shieldAmount){
+        this.ClientShieldAmount = shieldAmount;
     }
     public static final IGuiOverlay HUD_SHIELD = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;
@@ -27,7 +27,8 @@ public class ShieldHudOverlay {
             return;
         }
 
-        int shieldCount = (int) (PlayerShield.getPlayerShield(player).getShieldAmount() / 2);
+        int shieldCount = (int) (ClientShieldAmount / 2);
+//        int shieldCount = (int) (PlayerShield.getPlayerShie / 2);
         if (shieldCount > 10) {
             shieldCount = 10;
         }
