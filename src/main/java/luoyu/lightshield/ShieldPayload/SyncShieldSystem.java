@@ -16,6 +16,7 @@ public class SyncShieldSystem {
     public record ShieldData(float shieldAmount) implements CustomPacketPayload {
 
         public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
+
         public ShieldData(final FriendlyByteBuf buffer) {
             this(buffer.readFloat());
         }
@@ -27,7 +28,6 @@ public class SyncShieldSystem {
         public ResourceLocation id() {
             return ID;
         }
-
         @SubscribeEvent
         public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
             final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
