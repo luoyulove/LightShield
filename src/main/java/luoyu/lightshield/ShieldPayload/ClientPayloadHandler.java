@@ -1,12 +1,10 @@
 package luoyu.lightshield.ShieldPayload;
 
-import luoyu.lightshield.PlayerShield;
+import luoyu.lightshield.ShieldSystem.Shield;
 import luoyu.lightshield.ShieldHUD.ShieldHudOverlay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.handlers.ServerPayloadHandler;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
-import org.apache.logging.log4j.core.jmx.Server;
 
 
 import static com.mojang.text2speech.Narrator.LOGGER;
@@ -22,8 +20,8 @@ public class ClientPayloadHandler {
         float shieldAmount = shielddata.shieldAmount();
 
         context.workHandler().submitAsync(() -> {
-                    PlayerShield playerShield = PlayerShield.getPlayerShield(player);
-                    playerShield.setShieldAmount(shieldAmount);
+                    Shield shield = Shield.getPlayerShield(player);
+                    shield.setShieldAmount(shieldAmount);
                     System.out.println(shieldAmount);
                     LOGGER.info(String.valueOf(shieldAmount));
 

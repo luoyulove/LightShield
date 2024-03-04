@@ -1,11 +1,7 @@
-package luoyu.lightshield;
+package luoyu.lightshield.ShieldSystem;
 
 import luoyu.lightshield.Enchantment.EnchantInit;
 import luoyu.lightshield.ShieldPayload.SyncShieldSystem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -14,31 +10,29 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class PlayerShield {
-    private static final Map<UUID, PlayerShield> PlayerShieldMap = new HashMap<>();
+public class Shield {
+    private static final Map<UUID, Shield> PlayerShieldMap = new HashMap<>();
     private final Player player;
     private float maxShieldAmount;
     private float shieldAmount;
 
-    public PlayerShield(Player player) {
+    public Shield(Player player) {
         this.player = player;
         this.shieldAmount = 0;
         this.maxShieldAmount = 10;
         this.refreshPlayerMaxShield();
     }
 
-    public static PlayerShield getPlayerShield(Player player) {
+    public static Shield getPlayerShield(Player player) {
         UUID playerUUID = player.getUUID();
         if (!PlayerShieldMap.containsKey(playerUUID)) {
-            PlayerShieldMap.put(playerUUID, new PlayerShield(player));
+            PlayerShieldMap.put(playerUUID, new Shield(player));
         } else {
             PlayerShieldMap.get(playerUUID).refreshPlayerMaxShield();
         }
@@ -49,10 +43,10 @@ public class PlayerShield {
     public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
         if (!event.side.isClient() && getPlayerShield(event.player).shieldAmount < getPlayerShield(event.player).maxShieldAmount) {
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
-                PlayerShield playerShield = getPlayerShield(event.player);
+                Shield shield = getPlayerShield(event.player);
                 float shieldRegen = shieldRegenAmount(event.player);
-                float newShieldAmount = Math.min(playerShield.shieldAmount + shieldRegen, playerShield.getMaxShieldAmount());
-                playerShield.setShieldAmount(newShieldAmount);
+                float newShieldAmount = Math.min(shield.shieldAmount + shieldRegen, shield.getMaxShieldAmount());
+                shield.setShieldAmount(newShieldAmount);
 
                 // sync with the client
                 var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);

@@ -1,15 +1,12 @@
 package luoyu.lightshield.ShieldHUD;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import luoyu.lightshield.PlayerShield;
-import luoyu.lightshield.ShieldPayload.ClientPayloadHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
-import net.neoforged.neoforge.network.PacketDistributor;
 
-import static luoyu.lightshield.Resource.ShieldIcon.ClientModBusEvents.FILLED_SHIELD;
+import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.FILLED_SHIELD;
 public class ShieldHudOverlay {
     private static float ClientShieldAmount;
     public static Player getPlayer(){
