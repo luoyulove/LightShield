@@ -64,6 +64,10 @@ public class Shield {
                 var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
                 PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
             }
+            if (newShieldAmount < 0) {
+                var pkt = new SyncShieldSystem.ShieldData(0.5F);
+                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
+            }
         }
     }
 
