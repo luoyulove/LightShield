@@ -1,6 +1,7 @@
 package luoyu.lightshield.ShieldHUD;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import luoyu.lightshield.ShieldSystem.Shield;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
@@ -12,7 +13,7 @@ public class ShieldHudOverlay {
     public static Player getPlayer(){
         return Minecraft.getInstance().player;
     }
-    public static void setShieldAmount(float shieldAmount){
+    public static void getShieldAmount(float shieldAmount){
         ClientShieldAmount = shieldAmount;
     }
     public static final IGuiOverlay HUD_SHIELD = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
@@ -23,6 +24,13 @@ public class ShieldHudOverlay {
         if (player != null && player.isCreative() && player.isSpectator()) {
             return;
         }
+
+//        if (ClientShieldAmount < 21){
+//            int ShieldCount = (int) (ClientShieldAmount / 2);
+//        } else if (ClientShieldAmount >21){
+//            int ShieldCount = (int) (ClientShieldAmount / );
+//
+//        }
 
         int shieldCount = (int) (ClientShieldAmount / 2);
 //        int shieldCount = (int) (PlayerShield.getPlayerShie / 2);
