@@ -54,6 +54,19 @@ public class Shield {
             }
         }
     }
+    @SubscribeEvent
+    public static void onShieldRefresh(TickEvent.PlayerTickEvent event){
+        if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 5 == 0) {
+            Shield shield = getPlayerShield(event.player);
+            float newShieldAmount = shield.shieldAmount;
+
+            if (newShieldAmount > 0) {
+                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
+                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
+            }
+        }
+    }
+
     public static float shieldRegenAmount(Player player) {
         int enchantmentLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {

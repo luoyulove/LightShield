@@ -20,7 +20,7 @@ public class ShieldHudOverlay {
         int y = screenHeight;
 
         Player player = getPlayer();
-        if (player != null && player.isCreative()) {
+        if (player != null && player.isCreative() && player.isSpectator()) {
             return;
         }
 
