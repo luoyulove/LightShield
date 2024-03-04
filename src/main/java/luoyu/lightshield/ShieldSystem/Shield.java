@@ -70,7 +70,6 @@ public class Shield {
             }
         }
     }
-
     public static float shieldRegenAmount(Player player) {
         int enchantmentLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
