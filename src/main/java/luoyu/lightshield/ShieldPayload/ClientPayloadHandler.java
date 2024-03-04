@@ -17,7 +17,7 @@ public class ClientPayloadHandler {
     public static ClientPayloadHandler getClient() {
         return Client;
     }
-    public void handleData(final PlayerShield.ShieldData shielddata, final PlayPayloadContext context) {
+    public void handleData(final SyncShieldSystem.ShieldData shielddata, final PlayPayloadContext context) {
         Player player = context.player().get();
         float shieldAmount = shielddata.shieldAmount();
 
@@ -27,6 +27,7 @@ public class ClientPayloadHandler {
                     System.out.println(shieldAmount);
                     LOGGER.info(String.valueOf(shieldAmount));
 
+                    ShieldHudOverlay.setShieldAmount(shieldAmount);
                 })
                 .exceptionally(e -> {
                     context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));

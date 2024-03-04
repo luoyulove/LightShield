@@ -15,8 +15,8 @@ public class ShieldHudOverlay {
     public static Player getPlayer(){
         return Minecraft.getInstance().player;
     }
-    public void setShieldAmount(float shieldAmount){
-        this.ClientShieldAmount = shieldAmount;
+    public static void setShieldAmount(float shieldAmount){
+        ClientShieldAmount = shieldAmount;
     }
     public static final IGuiOverlay HUD_SHIELD = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;

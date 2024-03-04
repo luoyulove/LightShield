@@ -1,15 +1,19 @@
 package luoyu.lightshield;
 
 import luoyu.lightshield.Enchantment.EnchantInit;
+import luoyu.lightshield.ShieldPayload.SyncShieldSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
@@ -49,10 +53,13 @@ public class PlayerShield {
                 float shieldRegen = shieldRegenAmount(event.player);
                 float newShieldAmount = Math.min(playerShield.shieldAmount + shieldRegen, playerShield.getMaxShieldAmount());
                 playerShield.setShieldAmount(newShieldAmount);
+
+                // sync with the client
+                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
+                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
             }
         }
     }
-
     public static float shieldRegenAmount(Player player) {
         int enchantmentLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -62,7 +69,6 @@ public class PlayerShield {
         }
         return 1 + (enchantmentLevel * 0.25F);
     }
-
     private void refreshPlayerMaxShield() {
         int enchantmentLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -73,7 +79,7 @@ public class PlayerShield {
         this.maxShieldAmount = 4 + enchantmentLevel;
     }
 
-    public  float getShieldAmount() {
+    public float getShieldAmount() {
         return this.shieldAmount;
     }
 
@@ -83,34 +89,5 @@ public class PlayerShield {
 
     public float setShieldAmount(float shieldAmount) {
         return this.shieldAmount = shieldAmount;
-    }
-    public ShieldData toShieldData() {
-        return new ShieldData(this.getShieldAmount());
-    }
-
-    @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.MOD)
-    public record ShieldData(float shieldAmount) implements CustomPacketPayload {
-        public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
-
-        public ShieldData(final FriendlyByteBuf buffer) {
-            this(buffer.readFloat());
-        }
-        @Override
-        public void write(final FriendlyByteBuf buffer) {
-            buffer.writeFloat(this.shieldAmount);
-        }
-
-        @Override
-        public ResourceLocation id() {
-            return ID;
-        }
-
-        @SubscribeEvent
-        public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
-            final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
-            registrar.play(ShieldData.ID, PlayerShield.ShieldData::new, handler -> handler
-                    .client(luoyu.lightshield.ShieldPayload.ClientPayloadHandler.getClient()::handleData)
-                    .server(luoyu.lightshield.ShieldPayload.ServerPayloadHandler.getServer()::handleData));
-        }
     }
 }
