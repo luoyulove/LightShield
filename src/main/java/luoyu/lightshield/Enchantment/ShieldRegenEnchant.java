@@ -24,7 +24,7 @@ public class ShieldRegenEnchant extends Enchantment{
     }
     @Override
     public int getMaxCost(int level){
-        return level * 16;
+        return this.getMinCost(level) + 16;
     }
     @Override
     public int getMinLevel(){

@@ -15,5 +15,6 @@ public class EnchantInit {
     }
     public static final DeferredHolder<Enchantment, ShieldRegenEnchant> SHIELD_REGEN = register("shield_regen", ShieldRegenEnchant::new);
     public static final DeferredHolder<Enchantment, ShieldMaxEnchant> SHIELD_MAX = register("max_shield", ShieldMaxEnchant::new);
+    public static final DeferredHolder<Enchantment, ShieldDefenseEnchant> SHIELD_DEFENSE = register("shield_defense", ShieldDefenseEnchant::new);
 //    public static final DeferredHolder<Enchantment, ShieldAttackEnchant> SHIELD_ATTACK = register("shield_attack", ShieldAttackEnchant::new);
 }

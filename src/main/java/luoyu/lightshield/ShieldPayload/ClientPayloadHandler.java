@@ -25,7 +25,7 @@ public class ClientPayloadHandler {
                     System.out.println(shieldAmount);
                     LOGGER.info(String.valueOf(shieldAmount));
 
-                    ShieldHudOverlay.setShieldAmount(shieldAmount);
+                    ShieldHudOverlay.getShieldAmount(shieldAmount);
                 })
                 .exceptionally(e -> {
                     context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));

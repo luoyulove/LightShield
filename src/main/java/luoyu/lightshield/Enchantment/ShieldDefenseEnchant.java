@@ -6,9 +6,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
-public class ShieldMaxEnchant extends Enchantment {
-    public ShieldMaxEnchant() {
-        super(Rarity.VERY_RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[]{
+public class ShieldDefenseEnchant extends Enchantment{
+    public ShieldDefenseEnchant() {
+        super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[]{
                 EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
         });
     }
@@ -18,11 +18,11 @@ public class ShieldMaxEnchant extends Enchantment {
     }
     @Override
     public int getMinCost(int level){
-        return level * 18;
+        return level * 12;
     }
     @Override
     public int getMaxCost(int level){
-        return this.getMinCost(level) + 24;
+        return this.getMinCost(level) + 16;
     }
     @Override
     public int getMinLevel(){
@@ -30,6 +30,6 @@ public class ShieldMaxEnchant extends Enchantment {
     }
     @Override
     public int getMaxLevel(){
-        return 2;
+        return 4;
     }
 }
