@@ -40,6 +40,9 @@ public class ShieldEvent {
                     if (slot.getType() == EquipmentSlot.Type.ARMOR) {
                         enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_DEFENSE.get(), player);
                     }
+                    if (enchantmentLevel > 20){
+                        enchantmentLevel = 20;
+                    }
                 }
                 shieldDamage = shieldDamage * (1 - (0.025F * enchantmentLevel));
                 shield.setShieldAmount(shield.getShieldAmount() - ((shieldDamage)* (1 - (0.025F * enchantmentLevel))));
