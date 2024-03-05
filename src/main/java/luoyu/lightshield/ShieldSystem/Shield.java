@@ -49,8 +49,8 @@ public class Shield {
                 shield.setShieldAmount(newShieldAmount);
 
                 // sync with the client
-                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
-                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
+//                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
+//                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
             }
         }
     }
@@ -58,7 +58,7 @@ public class Shield {
     public static void onShieldRefresh(TickEvent.PlayerTickEvent event){
         if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 5 == 0) {
             Shield shield = getPlayerShield(event.player);
-            float newShieldAmount = shield.shieldAmount;
+            float newShieldAmount = shield.getShieldAmount();
 
             if (newShieldAmount > 0) {
                 var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
@@ -86,7 +86,7 @@ public class Shield {
                 enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_MAX.get(), player);
             }
         }
-        this.maxShieldAmount = 4 + enchantmentLevel;
+        this.maxShieldAmount = 4 + (enchantmentLevel * 2);
     }
 
     public float getShieldAmount() {
