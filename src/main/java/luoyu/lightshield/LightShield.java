@@ -22,6 +22,7 @@ import org.slf4j.Logger;
 
 import static luoyu.lightshield.Effects.EffectInit.EFFECT;
 import static luoyu.lightshield.Enchantment.EnchantInit.ENCHANTMENTS;
+import static luoyu.lightshield.Items.Potion.PotionInit.POTION;
 
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -70,6 +71,8 @@ public class LightShield
         modEventBus.addListener(this::clientSetup);
 
         EFFECT.register(modEventBus);
+        POTION.register(modEventBus);
+
         ENCHANTMENTS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
