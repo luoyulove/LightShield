@@ -1,4 +1,4 @@
-package luoyu.lightshield.ShieldPayload;
+package luoyu.lightshield.ShieldSystem;
 
 import luoyu.lightshield.LightShield;
 import net.minecraft.network.FriendlyByteBuf;
@@ -30,7 +30,7 @@ public class SyncShieldSystem {
         public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
             final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
             registrar.play(ShieldData.ID, ShieldData::new, handler -> handler
-                    .client(luoyu.lightshield.ShieldPayload.ClientPayloadHandler.getClient()::handleData));
+                    .client(ClientPayloadHandler.getClient()::handleData));
         }
     }
 }

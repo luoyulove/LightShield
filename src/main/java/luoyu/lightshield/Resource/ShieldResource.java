@@ -1,6 +1,6 @@
 package luoyu.lightshield.Resource;
 
-import luoyu.lightshield.ShieldHUD.ShieldHudOverlay;
+import luoyu.lightshield.ShieldSystem.ShieldHudOverlay;
 import luoyu.lightshield.LightShield;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;

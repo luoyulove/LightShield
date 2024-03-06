@@ -1,12 +1,9 @@
 package luoyu.lightshield.ShieldSystem;
 
-import luoyu.lightshield.Effects.EffectInit;
 import luoyu.lightshield.Effects.ShieldMaxEffect;
 import luoyu.lightshield.Effects.ShieldRegenEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
-import luoyu.lightshield.ShieldPayload.SyncShieldSystem;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -19,6 +16,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 import static com.mojang.text2speech.Narrator.LOGGER;
 
@@ -58,9 +56,6 @@ public class Shield {
                 if (getPlayerShield(event.player).shieldAmount > getPlayerShield(event.player).maxShieldAmount){
                     shield.setShieldAmount(getPlayerShield(event.player).maxShieldAmount);
                 }
-                // sync with the client
-//                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
-//                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
             }
         }
     }
@@ -93,8 +88,10 @@ public class Shield {
                 EffectLevel = effect.getAmplifier();
             }
         }
+//        LOGGER.info(String.valueOf(1 + (enchantmentLevel * 0.25F) + (EffectLevel * 1F)));
         return 1 + (enchantmentLevel * 0.25F) + (EffectLevel * 1F);
     }
+
     private void refreshPlayerMaxShield() {
         int enchantmentLevel = 0;
         int EffectLevel = 0;

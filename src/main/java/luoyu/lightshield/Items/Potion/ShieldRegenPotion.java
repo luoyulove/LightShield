@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 public class ShieldRegenPotion extends Potion {
     @Override
     public List<MobEffectInstance> getEffects() {
-        MobEffectInstance effectInstance = new MobEffectInstance(EffectInit.EFFECT_SHIELD_REGEN.get(), 200 , 0);
+        MobEffectInstance effectInstance = new MobEffectInstance(EffectInit.EFFECT_SHIELD_REGEN.get(), 500 , 0);
         return Collections.singletonList(effectInstance);
     }
 }

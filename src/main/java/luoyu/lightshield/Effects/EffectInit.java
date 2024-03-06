@@ -19,6 +19,6 @@ public class EffectInit {
     private static <T extends MobEffect> DeferredHolder<MobEffect, T> register(String _id, Supplier<T> _sup) {
         return EFFECT.register(_id, _sup);
     }
-    public static final DeferredHolder<MobEffect, ShieldRegenEffect> EFFECT_SHIELD_REGEN = register("shield_regen", ShieldRegenEffect::new);
     public static final DeferredHolder<MobEffect, ShieldMaxEffect> EFFECT_SHIELD_MAX = register("shield_max", ShieldMaxEffect::new);
+    public static final DeferredHolder<MobEffect, ShieldRegenEffect> EFFECT_SHIELD_REGEN = register("shield_regen", ShieldRegenEffect::new);
 }

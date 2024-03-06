@@ -1,7 +1,7 @@
 package luoyu.lightshield.Listener;
 
 import luoyu.lightshield.Enchantment.EnchantInit;
-import luoyu.lightshield.ShieldPayload.SyncShieldSystem;
+import luoyu.lightshield.ShieldSystem.SyncShieldSystem;
 import luoyu.lightshield.ShieldSystem.Shield;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;

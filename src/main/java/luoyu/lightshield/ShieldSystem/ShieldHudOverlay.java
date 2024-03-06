@@ -1,4 +1,4 @@
-package luoyu.lightshield.ShieldHUD;
+package luoyu.lightshield.ShieldSystem;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import luoyu.lightshield.ShieldSystem.Shield;
