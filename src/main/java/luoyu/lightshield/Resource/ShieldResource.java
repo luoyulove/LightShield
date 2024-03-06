@@ -13,6 +13,8 @@ public class ShieldResource {
     public static class ClientModBusEvents {
         public static final ResourceLocation FILLED_SHIELD = new ResourceLocation(LightShield.MOD_ID,
                 "textures/gui/icon_shield.png");
+        public static final ResourceLocation EFFECT_SHIELD_REGEN = new ResourceLocation(LightShield.MOD_ID,
+                "textures/gui/icon_shield.png");
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
             event.registerAboveAll(FILLED_SHIELD, ShieldHudOverlay.HUD_SHIELD);

@@ -1,8 +1,13 @@
 package luoyu.lightshield.ShieldSystem;
 
+import luoyu.lightshield.Effects.EffectInit;
+import luoyu.lightshield.Effects.ShieldMaxEffect;
+import luoyu.lightshield.Effects.ShieldRegenEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
 import luoyu.lightshield.ShieldPayload.SyncShieldSystem;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -14,6 +19,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static com.mojang.text2speech.Narrator.LOGGER;
 
 @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Shield {
@@ -41,13 +48,16 @@ public class Shield {
 
     @SubscribeEvent
     public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
-        if (!event.side.isClient() && getPlayerShield(event.player).shieldAmount < getPlayerShield(event.player).maxShieldAmount) {
+        if (!event.side.isClient()) {
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
                 Shield shield = getPlayerShield(event.player);
                 float shieldRegen = shieldRegenAmount(event.player);
                 float newShieldAmount = Math.min(shield.shieldAmount + shieldRegen, shield.getMaxShieldAmount());
                 shield.setShieldAmount(newShieldAmount);
 
+                if (getPlayerShield(event.player).shieldAmount > getPlayerShield(event.player).maxShieldAmount){
+                    shield.setShieldAmount(getPlayerShield(event.player).maxShieldAmount);
+                }
                 // sync with the client
 //                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
 //                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
@@ -72,21 +82,33 @@ public class Shield {
     }
     public static float shieldRegenAmount(Player player) {
         int enchantmentLevel = 0;
+        int EffectLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.getType() == EquipmentSlot.Type.ARMOR) {
                 enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_REGEN.get(), player);
             }
         }
-        return 1 + (enchantmentLevel * 0.25F);
+        for (MobEffectInstance effect : player.getActiveEffects()){
+            if (effect.getEffect() instanceof ShieldRegenEffect){
+                EffectLevel = effect.getAmplifier();
+            }
+        }
+        return 1 + (enchantmentLevel * 0.25F) + (EffectLevel * 1F);
     }
     private void refreshPlayerMaxShield() {
         int enchantmentLevel = 0;
+        int EffectLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.getType() == EquipmentSlot.Type.ARMOR) {
                 enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_MAX.get(), player);
             }
         }
-        this.maxShieldAmount = 4 + (enchantmentLevel * 2);
+        for (MobEffectInstance effect : player.getActiveEffects()){
+            if (effect.getEffect() instanceof ShieldMaxEffect){
+                EffectLevel = effect.getAmplifier();
+            }
+        }
+        this.maxShieldAmount = 4 + (enchantmentLevel * 2) + (EffectLevel * 10F);
     }
 
     public float getShieldAmount() {

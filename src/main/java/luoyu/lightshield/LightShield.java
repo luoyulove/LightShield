@@ -20,6 +20,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraftforge.fml.unsafe.UnsafeHacks;
 import org.slf4j.Logger;
 
+import static luoyu.lightshield.Effects.EffectInit.EFFECT;
 import static luoyu.lightshield.Enchantment.EnchantInit.ENCHANTMENTS;
 
 
@@ -68,6 +69,7 @@ public class LightShield
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
 
+        EFFECT.register(modEventBus);
         ENCHANTMENTS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
