@@ -15,7 +15,7 @@ import java.util.List;
 public class ShieldMaxPotion extends Potion {
     @Override
     public List<MobEffectInstance> getEffects() {
-        MobEffectInstance effectInstance = new MobEffectInstance(EffectInit.EFFECT_SHIELD_MAX.get(), 1200 , 0);
+        MobEffectInstance effectInstance = new MobEffectInstance(EffectInit.EFFECT_SHIELD_MAX.get(), 6000 , 0);
         return Collections.singletonList(effectInstance);
     }
 }

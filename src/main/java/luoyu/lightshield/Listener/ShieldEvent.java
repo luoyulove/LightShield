@@ -13,6 +13,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 @Mod.EventBusSubscriber(modid = "lightshield")
 public class ShieldEvent {
     //    private static float ClientShieldAmount;
@@ -43,11 +45,16 @@ public class ShieldEvent {
                 float shieldAbsorbedDamage = Math.min(ReduceDamage, shield.getShieldAmount());
 
                 float newShieldAmount = shield.setShieldAmount(shield.getShieldAmount() - shieldAbsorbedDamage);
-
-                e.setAmount(Math.max(0, originalDamage - newShieldAmount));
+                float finalDamage = (Math.max(0, ReduceDamage - newShieldAmount));
+                e.setAmount(finalDamage);
 
                 var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
                 PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
+
+//                LOGGER.info("调试：" + "护盾当前：" + shield.getShieldAmount());
+//                LOGGER.info("调试：" + "护盾上限：" + shield.getMaxShieldAmount());
+//                LOGGER.info("调试：" + "原伤害："  + originalDamage + " 对护盾伤害：" + ReduceDamage);
+//                LOGGER.info("调试：" + "最终伤害：" + finalDamage);
             }
         }
     }
