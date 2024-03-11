@@ -18,15 +18,14 @@ public class ClientPayloadHandler {
         float shieldAmount = shielddata.shieldAmount();
 
         context.workHandler().submitAsync(() -> {
-                    Shield shield = Shield.getPlayerShield(player);
-                    shield.setShieldAmount(shieldAmount);
+            Shield shield = Shield.getPlayerShield(player);
+            shield.setShieldAmount(shieldAmount);
 
                       // for DEBUG
 //                    System.out.println(shieldAmount);
 //                    LOGGER.info(String.valueOf(shieldAmount));
-
-                    ShieldHudOverlay.getShieldAmount(shieldAmount);
-                })
+            ShieldHudOverlay.getShieldAmount(shieldAmount);
+        })
                 .exceptionally(e -> {
                     context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
                     LOGGER.info(String.valueOf(shieldAmount));

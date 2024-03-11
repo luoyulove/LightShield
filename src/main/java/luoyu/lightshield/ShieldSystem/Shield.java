@@ -70,9 +70,11 @@ public class Shield {
     }
     @SubscribeEvent
     public static void onShieldRefresh(TickEvent.PlayerTickEvent event){
-        if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 5 == 0) {
+        if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 10 == 0) {
             Shield shield = getPlayerShield(event.player);
+            Shield.getPlayerShield(event.player).refreshPlayerMaxShield();
             float newShieldAmount = shield.getShieldAmount();
+//            LOGGER.info(String.valueOf(Shield.getPlayerShield(event.player).maxShieldAmount));
 
             if (newShieldAmount > 0) {
                 var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
