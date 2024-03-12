@@ -12,6 +12,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
+
 @Mod.EventBusSubscriber(modid = "lightshield")
 public class ShieldDamageEvent {
     @SubscribeEvent
@@ -42,9 +44,9 @@ public class ShieldDamageEvent {
                 var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
                 PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
 
-//                LOGGER.info("调试：" + "护盾当前：" + shield.getShieldAmount());
+//                LOGGER.info("调试：" + "当前护盾：" + shield.getShieldAmount());
 //                LOGGER.info("调试：" + "护盾上限：" + shield.getMaxShieldAmount());
-//                LOGGER.info("调试：" + "原伤害："  + originalDamage + " 对护盾伤害：" + ReduceDamage);
+//                LOGGER.info("调试：" + "护盾吸收："  + shieldAbsorbedDamage + "(减免"+(originalDamage - ReduceDamage)+")");
 //                LOGGER.info("调试：" + "最终伤害：" + finalDamage);
             }
         }
