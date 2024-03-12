@@ -19,8 +19,6 @@ import java.util.UUID;
 
 import static luoyu.lightshield.ShieldSystem.ShieldRegenEvent.shieldRegen;
 
-//import static com.mojang.text2speech.Narrator.LOGGER;
-
 @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Shield {
     private static final Map<UUID, Shield> PlayerShieldMap = new HashMap<>();

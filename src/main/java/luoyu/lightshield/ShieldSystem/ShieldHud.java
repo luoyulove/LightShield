@@ -1,12 +1,11 @@
 package luoyu.lightshield.ShieldSystem;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
 
-import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.*;
+import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_II;
+import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_III;
 
 public class ShieldHud {
     private static float ClientShieldAmount;
@@ -27,17 +26,11 @@ public class ShieldHud {
 
         int shieldCount_I = (int) (ClientShieldAmount / 2);
         int shieldCount_II = (int) ((ClientShieldAmount / 2) - 10);
-        int shieldCount_III = (int) ((ClientShieldAmount / 2) - 20);
 
         if (shieldCount_I > 10) {
-            shieldCount_I = 10;
-        }
+            shieldCount_I = 10;}
         if (shieldCount_II > 10) {
-            shieldCount_II = 10;
-        }
-        if (shieldCount_III > 10) {
-            shieldCount_III = 10;
-        }
+            shieldCount_II = 10;}
 
         if (ClientShieldAmount < 21) {
             for (int i = 0; i < shieldCount_I; i++) {
