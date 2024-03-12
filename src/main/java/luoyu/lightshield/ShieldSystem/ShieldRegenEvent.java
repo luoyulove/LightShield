@@ -6,10 +6,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.TickEvent;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
 import static luoyu.lightshield.ShieldSystem.Shield.getPlayerShield;
 
 public class ShieldRegenEvent {
@@ -27,14 +24,6 @@ public class ShieldRegenEvent {
             }
         }
         return 1 + (enchantmentLevel * 0.25F) + (EffectLevel * 1F);
-    }
-    @SubscribeEvent
-    public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
-        if (!event.side.isClient()) {
-            if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
-                shieldRegen(event.player);
-            }
-        }
     }
     public static void shieldRegen(Player player){
         Shield shield = getPlayerShield(player);

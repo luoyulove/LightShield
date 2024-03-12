@@ -28,6 +28,7 @@ public class ShieldHud {
         int shieldCount_I = (int) (ClientShieldAmount / 2);
         int shieldCount_II = (int) ((ClientShieldAmount / 2) - 10);
         int shieldCount_III = (int) ((ClientShieldAmount / 2) - 20);
+
         if (shieldCount_I > 10) {
             shieldCount_I = 10;
         }
@@ -38,27 +39,17 @@ public class ShieldHud {
             shieldCount_III = 10;
         }
 
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, SHIELD_I);
-
-        if (ClientShieldAmount < 20) {
+        if (ClientShieldAmount < 21) {
             for (int i = 0; i < shieldCount_I; i++) {
                 guiGraphics.blit(SHIELD_II, x - 91 + (i * 8), y - 36, 90, 0, 0, 10, 5,
                         9, 9);
             }
         }
-        if (ClientShieldAmount > 20) {
+        if (ClientShieldAmount > 21) {
             for (int i = 0; i < shieldCount_II; i++) {
                 guiGraphics.blit(SHIELD_III, x - 91 + (i * 8), y - 36, 90, 0, 0, 10, 5,
                         9, 9);
             }
         }
-//        if (ClientShieldAmount > 40) {
-//            for (int i = 0; i < shieldCount_III; i++) {
-//                guiGraphics.blit(SHIELD_III, x - 91 + (i * 8), y - 36, 90, 0, 0, 10, 5,
-//                        9, 9);
-//            }
-//        }
     };
 }

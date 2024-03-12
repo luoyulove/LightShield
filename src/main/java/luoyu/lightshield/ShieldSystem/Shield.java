@@ -17,7 +17,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
+import static luoyu.lightshield.ShieldSystem.ShieldRegenEvent.shieldRegen;
+
+//import static com.mojang.text2speech.Narrator.LOGGER;
 
 @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Shield {
@@ -42,7 +44,14 @@ public class Shield {
         }
         return PlayerShieldMap.get(playerUUID);
     }
-
+    @SubscribeEvent
+    public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
+        if (!event.side.isClient()) {
+            if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
+                shieldRegen(event.player);
+            }
+        }
+    }
     @SubscribeEvent
     public static void onShieldRefresh(TickEvent.PlayerTickEvent event){
         if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 10 == 0) {
@@ -79,7 +88,7 @@ public class Shield {
                 EffectLevel = effect.getAmplifier();
             }
         }
-        LOGGER.info(String.valueOf(maxShieldAmount));
+//        LOGGER.info(String.valueOf(maxShieldAmount));
         return maxShieldAmount = 4 + (enchantmentLevel * 2) + (EffectLevel * 10F);
     }
 
