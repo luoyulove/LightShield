@@ -1,8 +1,7 @@
-package luoyu.lightshield.Listener;
+package luoyu.lightshield.ShieldSystem;
 
 import luoyu.lightshield.Enchantment.EnchantInit;
-import luoyu.lightshield.ShieldSystem.SyncShieldSystem;
-import luoyu.lightshield.ShieldSystem.Shield;
+import luoyu.lightshield.NetWork.SyncShieldSystem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,21 +12,13 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
-
 @Mod.EventBusSubscriber(modid = "lightshield")
-public class ShieldEvent {
-    //    private static float ClientShieldAmount;
-//    public static void setShieldAmount(float shieldAmount){
-//        ClientShieldAmount = shieldAmount;
-//    }
-    // 受伤计算
+public class ShieldDamageEvent {
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent e) {
         LivingEntity livingEntity = e.getEntity();
 
-        if (livingEntity instanceof Player) {
-            Player player = (Player) livingEntity;
+        if (livingEntity instanceof Player player) {
             Shield shield = Shield.getPlayerShield(player);
             float originalDamage = e.getAmount();
 

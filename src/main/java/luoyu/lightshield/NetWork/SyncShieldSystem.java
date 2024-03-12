@@ -1,4 +1,4 @@
-package luoyu.lightshield.ShieldSystem;
+package luoyu.lightshield.NetWork;
 
 import luoyu.lightshield.LightShield;
 import net.minecraft.network.FriendlyByteBuf;
