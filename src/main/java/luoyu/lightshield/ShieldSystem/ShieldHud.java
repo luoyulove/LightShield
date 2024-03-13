@@ -1,5 +1,6 @@
 package luoyu.lightshield.ShieldSystem;
 
+import luoyu.lightshield.ModConfig.NeoConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
@@ -18,8 +19,11 @@ public class ShieldHud {
     public static final IGuiOverlay HUD_SHIELD = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;
         int y = screenHeight;
-
         Player player = getPlayer();
+
+        if (!new NeoConfig().getConfigOverlay()) {
+            return;
+        }
         if (player != null && player.isCreative() || player.isSpectator()) {
             return;
         }

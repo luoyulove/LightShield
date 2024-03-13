@@ -1,6 +1,7 @@
 package luoyu.lightshield;
 
 import com.mojang.logging.LogUtils;
+import luoyu.lightshield.ModConfig.NeoConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -85,6 +86,7 @@ public class LightShield
         
         // Register ourselves for server and other game events we are interested in
         NeoForge.EVENT_BUS.register(this);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, NeoConfig.Config.CONFIG);
 
         // Register the item to a creative tab
 //        modEventBus.addListener(this::addCreative);
