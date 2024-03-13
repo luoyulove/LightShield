@@ -20,7 +20,7 @@ public class ShieldHud {
         int y = screenHeight;
 
         Player player = getPlayer();
-        if (player != null && player.isCreative() && player.isSpectator()) {
+        if (player != null && player.isCreative() || player.isSpectator()) {
             return;
         }
 
