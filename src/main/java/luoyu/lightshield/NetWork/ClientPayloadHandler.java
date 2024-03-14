@@ -15,35 +15,22 @@ public class ClientPayloadHandler {
     public static ClientPayloadHandler getClient() {
         return Client;
     }
-    public void handleShieldAmountData(final SyncShieldAmount.shieldAmountData shieldAmountData, final PlayPayloadContext context) {
+    public void handleData(final SyncShieldSystem.ShieldData shielddata, final PlayPayloadContext context) {
         Player player = context.player().get();
-        float shieldAmount = shieldAmountData.shieldAmount();
+        float shieldAmount = shielddata.shieldAmount();
 
         context.workHandler().submitAsync(() -> {
             Shield shield = Shield.getPlayerShield(player);
             shield.setShieldAmount(shieldAmount);
 
-            Api.getShieldAmount(shieldAmount);
+                      // for DEBUG
+//                    System.out.println(shieldAmount);
+//                    LOGGER.info(String.valueOf(shieldAmount));
+            //Api.setShieldAmount(shieldAmount);
         })
                 .exceptionally(e -> {
                     context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
                     LOGGER.info(String.valueOf(shieldAmount));
-                    return null;
-                });
-    }
-    public void handleShieldMaxData(final SyncShieldMax.shieldMaxData shieldMaxData, final PlayPayloadContext context) {
-        Player player = context.player().get();
-        float shieldMax = shieldMaxData.maxShieldAmount();
-
-        context.workHandler().submitAsync(() -> {
-                    Shield shield = Shield.getPlayerShield(player);
-                    shield.setShieldAmount(shieldMax);
-
-                    Api.getShieldAmount(shieldMax);
-                })
-                .exceptionally(e -> {
-                    context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
-                    LOGGER.info(String.valueOf(shieldMax));
                     return null;
                 });
     }
