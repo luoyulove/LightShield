@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HashMap;
@@ -87,7 +88,8 @@ public class Shield {
 //    @SubscribeEvent
 //    public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
 //        if (event.getEntity() instanceof ServerPlayer player){
-//            player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_REGEN.get(), 600, 5, true, false));
+////            player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_REGEN.get(), 600, 5, true, false));
+//            Shield.getPlayerShield(player).refreshPlayerMaxShield();
 //        }
 //    }
     private float refreshPlayerMaxShield() {
@@ -103,8 +105,10 @@ public class Shield {
                 EffectLevel = effect.getAmplifier();
             }
         }
-//        LOGGER.info(String.valueOf(maxShieldAmount));
-        return maxShieldAmount = 4 + (enchantmentLevel * 2) + (EffectLevel * 8F);
+        float newMaxShieldAmount = 4 + (enchantmentLevel * 2) + (EffectLevel * 8F);
+//        var pkt = new SyncShieldMax.shieldMaxData(newMaxShieldAmount);
+//        PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
+        return newMaxShieldAmount;
     }
 
     public float getShieldAmount() {
