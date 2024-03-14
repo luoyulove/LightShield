@@ -30,6 +30,7 @@ public class Shield {
         this.player = player;
         this.shieldAmount = 0;
         this.maxShieldAmount = refreshPlayerMaxShield();
+//        this.refreshPlayerMaxShield();
     }
 
     public static Shield getPlayerShield(Player player) {
@@ -66,6 +67,29 @@ public class Shield {
             }
         }
     }
+//    @SubscribeEvent
+//    public static void onPlayerLogin( event){
+//        if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 10 == 0) {
+//            Shield shield = getPlayerShield(event.player);
+//            Shield.getPlayerShield(event.player).refreshPlayerMaxShield();
+//            float newShieldAmount = shield.getShieldAmount();
+//
+//            if (newShieldAmount > 0) {
+//                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
+//                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
+//            }
+//            if (newShieldAmount < 0) {
+//                var pkt = new SyncShieldSystem.ShieldData(0.5F);
+//                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
+//            }
+//        }
+//    }
+//    @SubscribeEvent
+//    public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
+//        if (event.getEntity() instanceof ServerPlayer player){
+//            player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_REGEN.get(), 600, 5, true, false));
+//        }
+//    }
     private float refreshPlayerMaxShield() {
         int enchantmentLevel = 0;
         int EffectLevel = 0;
@@ -79,6 +103,7 @@ public class Shield {
                 EffectLevel = effect.getAmplifier();
             }
         }
+//        LOGGER.info(String.valueOf(maxShieldAmount));
         return maxShieldAmount = 4 + (enchantmentLevel * 2) + (EffectLevel * 8F);
     }
 
