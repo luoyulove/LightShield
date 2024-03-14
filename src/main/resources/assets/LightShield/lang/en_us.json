@@ -8,8 +8,9 @@
     "enchantment.lightshield.shield_defense": "shield_defense",
     "enchantment.lightshield.shield_defense.desc": "Reduce damage taken by the shield",
 
-    "effect.lightshield.shield_regen": "shieldRegen",
-    "effect.lightshield.shield_max": "shieldMax",
+    "effect.lightshield.shield_regen": "shield Regen",
+    "effect.lightshield.shield_max": "shield Max",
+    "effect.lightshield.shield_cooldown": "shield Cooldown",
 
     "item.minecraft.potion.effect.shield_max": "shield_max potion",
     "item.minecraft.splash_potion.effect.shield_max": "shield_max splash potion",
@@ -17,5 +18,9 @@
 
     "item.minecraft.potion.effect.shield_regen": "shield_regen potion",
     "item.minecraft.splash_potion.effect.shield_regen": "shield_regen splash potion",
-    "item.minecraft.lingering_potion.effect.shield_regen": "shield_regen lingering potion"
+    "item.minecraft.lingering_potion.effect.shield_regen": "shield_regen lingering potion",
+
+    "item.minecraft.potion.effect.shield_cooldown": "shield_Cooldown potion",
+    "item.minecraft.splash_potion.effect.shield_cooldown": "shield_Cooldown splash potion",
+    "item.minecraft.lingering_potion.effect.shield_cooldown": "shield_Cooldown lingering potion"
 }
