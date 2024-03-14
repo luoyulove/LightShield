@@ -9,13 +9,13 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
 import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
-public class SyncShieldSystem {
+public class SyncShieldAmount {
     @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.MOD)
-    public record ShieldData(float shieldAmount) implements CustomPacketPayload {
+    public record shieldAmountData(float shieldAmount) implements CustomPacketPayload {
 
         public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
 
-        public ShieldData(final FriendlyByteBuf buffer) {
+        public shieldAmountData(final FriendlyByteBuf buffer) {
             this(buffer.readFloat());
         }
         @Override
@@ -29,8 +29,8 @@ public class SyncShieldSystem {
         @SubscribeEvent
         public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
             final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
-            registrar.play(ShieldData.ID, ShieldData::new, handler -> handler
-                    .client(ClientPayloadHandler.getClient()::handleData));
+            registrar.play(shieldAmountData.ID, shieldAmountData::new, handler -> handler
+                    .client(ClientPayloadHandler.getClient()::handleShieldAmountData));
         }
     }
 }

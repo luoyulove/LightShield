@@ -1,6 +1,6 @@
 package luoyu.lightshield.ShieldSystem;
 
-import luoyu.lightshield.NetWork.SyncShieldSystem;
+import luoyu.lightshield.NetWork.SyncShieldAmount;
 import luoyu.lightshield.Effects.ShieldMaxEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
 import net.minecraft.server.level.ServerPlayer;
@@ -58,11 +58,11 @@ public class Shield {
             float newShieldAmount = shield.getShieldAmount();
 
             if (newShieldAmount > 0) {
-                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
+                var pkt = new SyncShieldAmount.shieldAmountData(newShieldAmount);
                 PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
             }
             if (newShieldAmount < 0) {
-                var pkt = new SyncShieldSystem.ShieldData(0.5F);
+                var pkt = new SyncShieldAmount.shieldAmountData(0.5F);
                 PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
             }
         }
@@ -117,5 +117,8 @@ public class Shield {
 
     public float setShieldAmount(float shieldAmount) {
         return this.shieldAmount = shieldAmount;
+    }
+    public float setMaxShieldAmount(float maxShieldAmount) {
+        return this.shieldAmount = maxShieldAmount;
     }
 }

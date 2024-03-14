@@ -1,7 +1,7 @@
 package luoyu.lightshield.ShieldSystem;
 
 import luoyu.lightshield.Enchantment.EnchantInit;
-import luoyu.lightshield.NetWork.SyncShieldSystem;
+import luoyu.lightshield.NetWork.SyncShieldAmount;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,8 +11,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
-
-import static com.mojang.text2speech.Narrator.LOGGER;
 
 @Mod.EventBusSubscriber(modid = "lightshield")
 public class ShieldDamageEvent {
@@ -41,7 +39,7 @@ public class ShieldDamageEvent {
                 float finalDamage = (Math.max(0, ReduceDamage - newShieldAmount));
                 e.setAmount(finalDamage);
 
-                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
+                var pkt = new SyncShieldAmount.shieldAmountData(newShieldAmount);
                 PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
 
 //                LOGGER.info("调试：" + "当前护盾：" + shield.getShieldAmount());

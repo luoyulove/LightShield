@@ -2,7 +2,6 @@ package luoyu.lightshield.NetWork;
 
 import luoyu.lightshield.Api;
 import luoyu.lightshield.ShieldSystem.Shield;
-import luoyu.lightshield.ShieldSystem.ShieldHudOverlay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
@@ -16,22 +15,35 @@ public class ClientPayloadHandler {
     public static ClientPayloadHandler getClient() {
         return Client;
     }
-    public void handleData(final SyncShieldSystem.ShieldData shielddata, final PlayPayloadContext context) {
+    public void handleShieldAmountData(final SyncShieldAmount.shieldAmountData shieldAmountData, final PlayPayloadContext context) {
         Player player = context.player().get();
-        float shieldAmount = shielddata.shieldAmount();
+        float shieldAmount = shieldAmountData.shieldAmount();
 
         context.workHandler().submitAsync(() -> {
             Shield shield = Shield.getPlayerShield(player);
             shield.setShieldAmount(shieldAmount);
 
-                      // for DEBUG
-//                    System.out.println(shieldAmount);
-//                    LOGGER.info(String.valueOf(shieldAmount));
             Api.getShieldAmount(shieldAmount);
         })
                 .exceptionally(e -> {
                     context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
                     LOGGER.info(String.valueOf(shieldAmount));
+                    return null;
+                });
+    }
+    public void handleShieldMaxData(final SyncShieldMax.shieldMaxData shieldMaxData, final PlayPayloadContext context) {
+        Player player = context.player().get();
+        float shieldMax = shieldMaxData.maxShieldAmount();
+
+        context.workHandler().submitAsync(() -> {
+                    Shield shield = Shield.getPlayerShield(player);
+                    shield.setShieldAmount(shieldMax);
+
+                    Api.getShieldAmount(shieldMax);
+                })
+                .exceptionally(e -> {
+                    context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
+                    LOGGER.info(String.valueOf(shieldMax));
                     return null;
                 });
     }

@@ -10,7 +10,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 public class ShieldAttackEnchant extends Enchantment{
     public ShieldAttackEnchant() {
         super(Enchantment.Rarity.VERY_RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[]{
-                EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
+                EquipmentSlot.MAINHAND
         });
     }
 //    @SubscribeEvent
