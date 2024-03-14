@@ -2,6 +2,7 @@ package luoyu.lightshield;
 
 import luoyu.lightshield.NetWork.SyncShieldSystem;
 import luoyu.lightshield.ShieldSystem.Shield;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,6 +22,7 @@ public class Api {
             Player player = event.player;
 
             LOGGER.info(String.valueOf(Api.ClientShieldAmount));
+            player.sendSystemMessage(Component.literal(String.valueOf(Api.ClientShieldAmount)));
         }
     }
 }
