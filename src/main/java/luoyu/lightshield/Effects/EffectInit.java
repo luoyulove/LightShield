@@ -21,4 +21,5 @@ public class EffectInit {
     }
     public static final DeferredHolder<MobEffect, ShieldMaxEffect> EFFECT_SHIELD_MAX = register("shield_max", ShieldMaxEffect::new);
     public static final DeferredHolder<MobEffect, ShieldRegenEffect> EFFECT_SHIELD_REGEN = register("shield_regen", ShieldRegenEffect::new);
+    public static final DeferredHolder<MobEffect, ShieldCooldownEffect> EFFECT_SHIELD_COOLDOWN = register("shield_cooldown", ShieldCooldownEffect::new);
 }
