@@ -1,11 +1,11 @@
 package luoyu.lightshield.ShieldSystem;
 
+import luoyu.lightshield.Api;
 import luoyu.lightshield.ModConfig.NeoConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
 
-import static luoyu.lightshield.Api.ClientShieldAmount;
 import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_II;
 import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_III;
 
@@ -18,25 +18,27 @@ public class ShieldHudOverlay {
         if (!new NeoConfig().getConfigOverlay()) {
             return;
         }
-        if (player != null && player.isCreative() || player.isSpectator()) {
+        if (player != null && (player.isCreative() || player.isSpectator())) {
             return;
         }
 
-        int shieldCount_I = (int) (ClientShieldAmount / 2);
-        int shieldCount_II = (int) ((ClientShieldAmount / 2) - 10);
+        float shieldAmount = Api.getShieldAmount(player);
+
+        int shieldCount_I = (int) (shieldAmount / 2);
+        int shieldCount_II = (int) ((shieldAmount / 2) - 10);
 
         if (shieldCount_I > 10) {
             shieldCount_I = 10;}
         if (shieldCount_II > 10) {
             shieldCount_II = 10;}
 
-        if (ClientShieldAmount < 21) {
+        if (shieldAmount < 21) {
             for (int i = 0; i < shieldCount_I; i++) {
                 guiGraphics.blit(SHIELD_II, x - 91 + (i * 8), y - 36, 90, 0, 0, 10, 5,
                         9, 9);
             }
         }
-        if (ClientShieldAmount > 21) {
+        if (shieldAmount > 21) {
             for (int i = 0; i < shieldCount_II; i++) {
                 guiGraphics.blit(SHIELD_III, x - 91 + (i * 8), y - 36, 90, 0, 0, 10, 5,
                         9, 9);
