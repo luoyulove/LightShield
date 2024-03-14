@@ -1,9 +1,11 @@
 package luoyu.lightshield.ShieldSystem;
 
+import luoyu.lightshield.Effects.EffectInit;
 import luoyu.lightshield.Enchantment.EnchantInit;
 import luoyu.lightshield.NetWork.SyncShieldAmount;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -33,15 +35,21 @@ public class ShieldDamageEvent {
                     enchantmentLevel = Math.min(enchantmentLevel, 20);
                 }
                 float EnchantReduce = 1 - (0.025F * enchantmentLevel);
-                float ReduceDamage = originalDamage * EnchantReduce;
+                originalDamage = originalDamage * EnchantReduce;
 
-                float shieldAbsorbedDamage = Math.min(ReduceDamage, shield.getShieldAmount());
+                shield.setShieldAmount(shield.getShieldAmount() - originalDamage);
 
-                float newShieldAmount = shield.setShieldAmount(shield.getShieldAmount() - shieldAbsorbedDamage);
-                float finalDamage = (Math.max(0, ReduceDamage - newShieldAmount));
+                float finalDamage = 0;
+                if (shield.getShieldAmount() - originalDamage <= 0){
+                    int ShieldCooldown = (int) (shield.getMaxShieldAmount() / player.getMaxHealth() * 12);
+
+                    finalDamage = -(shield.getShieldAmount());
+                    shield.setShieldAmount(0);
+                    player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_COOLDOWN.get(), ShieldCooldown, 0, true, true));
+                }
                 e.setAmount(finalDamage);
 
-                var pkt = new SyncShieldAmount.shieldAmountData(newShieldAmount);
+                var pkt = new SyncShieldAmount.shieldAmountData(shield.getShieldAmount());
                 PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
 //                LOGGER.info("调试：" + "当前护盾：" + shield.getShieldAmount());
 //                LOGGER.info("调试：" + "护盾上限：" + shield.getMaxShieldAmount());

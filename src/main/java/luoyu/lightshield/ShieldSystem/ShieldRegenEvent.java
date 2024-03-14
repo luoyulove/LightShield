@@ -1,5 +1,6 @@
 package luoyu.lightshield.ShieldSystem;
 
+import luoyu.lightshield.Effects.ShieldCooldownEffect;
 import luoyu.lightshield.Effects.ShieldRegenEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
 import luoyu.lightshield.NetWork.SyncShieldAmount;
@@ -27,7 +28,12 @@ public class ShieldRegenEvent {
                 EffectLevel = effect.getAmplifier();
             }
         }
-        return 1 + (enchantmentLevel * 0.25F) + (EffectLevel * 1F);
+        for (MobEffectInstance effect : player.getActiveEffects()){
+            if (effect.getEffect() instanceof ShieldCooldownEffect){
+                return 0;
+            }
+        }
+        return 1 + (enchantmentLevel * 0.25F) + (EffectLevel * 0.5F);
     }
     public static void shieldRegen(Player player){
         Shield shield = getPlayerShield(player);
