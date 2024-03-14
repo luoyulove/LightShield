@@ -5,16 +5,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
 
+import static luoyu.lightshield.Api.ClientShieldAmount;
 import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_II;
 import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_III;
 
-public class ShieldHud {
-    private static float ClientShieldAmount;
+public class ShieldHudOverlay {
     public static Player getPlayer(){
         return Minecraft.getInstance().player;
-    }
-    public static void getShieldAmount(float shieldAmount){
-        ClientShieldAmount = shieldAmount;
     }
     public static final IGuiOverlay HUD_SHIELD = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;

@@ -11,16 +11,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import static com.mojang.text2speech.Narrator.LOGGER;
 
 public class Api {
-    private static float ClientShieldAmount;
-    public void getShieldAmount(float shieldAmount){
+    public static float ClientShieldAmount;
+    public static void getShieldAmount(float shieldAmount){
         ClientShieldAmount = shieldAmount;
-    }
-    @SubscribeEvent
-    public static void DebugForOtherModGetShield(TickEvent.PlayerTickEvent event){
-        if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 10 == 0) {
-            Player player = event.player;
-
-            LOGGER.info(String.valueOf(Api.ClientShieldAmount));
-        }
     }
 }

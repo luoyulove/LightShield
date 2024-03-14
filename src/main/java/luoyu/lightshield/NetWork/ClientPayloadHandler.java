@@ -1,7 +1,8 @@
 package luoyu.lightshield.NetWork;
 
+import luoyu.lightshield.Api;
 import luoyu.lightshield.ShieldSystem.Shield;
-import luoyu.lightshield.ShieldSystem.ShieldHud;
+import luoyu.lightshield.ShieldSystem.ShieldHudOverlay;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
@@ -26,7 +27,7 @@ public class ClientPayloadHandler {
                       // for DEBUG
 //                    System.out.println(shieldAmount);
 //                    LOGGER.info(String.valueOf(shieldAmount));
-            ShieldHud.getShieldAmount(shieldAmount);
+            Api.getShieldAmount(shieldAmount);
         })
                 .exceptionally(e -> {
                     context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));

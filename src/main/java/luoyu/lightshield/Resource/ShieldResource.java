@@ -1,6 +1,6 @@
 package luoyu.lightshield.Resource;
 
-import luoyu.lightshield.ShieldSystem.ShieldHud;
+import luoyu.lightshield.ShieldSystem.ShieldHudOverlay;
 import luoyu.lightshield.LightShield;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -21,9 +21,9 @@ public class ShieldResource {
                 "textures/gui/icon_shield.png");
         @SubscribeEvent
         public static void registerGuiOverlays(RegisterGuiOverlaysEvent event) {
-            event.registerAboveAll(SHIELD_I, ShieldHud.HUD_SHIELD);
-            event.registerAboveAll(SHIELD_II, ShieldHud.HUD_SHIELD);
-            event.registerAboveAll(SHIELD_III, ShieldHud.HUD_SHIELD);
+            event.registerAboveAll(SHIELD_I, ShieldHudOverlay.HUD_SHIELD);
+            event.registerAboveAll(SHIELD_II, ShieldHudOverlay.HUD_SHIELD);
+            event.registerAboveAll(SHIELD_III, ShieldHudOverlay.HUD_SHIELD);
         }
     }
 }
