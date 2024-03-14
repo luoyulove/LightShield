@@ -31,11 +31,8 @@ public class ShieldRegenEvent {
     }
     public static void shieldRegen(Player player){
         Shield shield = getPlayerShield(player);
-        float shieldRegen = shieldRegenAmount(player);
-        float newShieldAmount = Math.min(shield.getShieldAmount() + shieldRegen, shield.getMaxShieldAmount());
+        float newShieldAmount = Math.min(shield.getShieldAmount() + shieldRegenAmount(player), shield.getMaxShieldAmount());
         shield.setShieldAmount(newShieldAmount);
-
-//        LOGGER.info("调试：" + "单次恢复：" + shieldRegen);
 
         if (shield.getShieldAmount() > shield.getMaxShieldAmount()) {
             shield.setShieldAmount(shield.getMaxShieldAmount());
