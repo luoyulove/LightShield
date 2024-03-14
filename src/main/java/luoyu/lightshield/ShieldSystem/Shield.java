@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static com.mojang.text2speech.Narrator.LOGGER;
 import static luoyu.lightshield.ShieldSystem.ShieldRegenEvent.shieldRegen;
 
 @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -30,8 +31,7 @@ public class Shield {
     public Shield(Player player) {
         this.player = player;
         this.shieldAmount = 0;
-        this.maxShieldAmount = refreshPlayerMaxShield();
-//        this.refreshPlayerMaxShield();
+        this.maxShieldAmount = 0;
     }
 
     public static Shield getPlayerShield(Player player) {
@@ -46,45 +46,18 @@ public class Shield {
     @SubscribeEvent
     public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
         if (!event.side.isClient()) {
+            if (event.phase == TickEvent.Phase.END && event.player.tickCount % 40 == 0) {
+                Shield.getPlayerShield(event.player).refreshPlayerMaxShield();
+
+                var pkt = new SyncShieldAmount.shieldAmountData(getPlayerShield(event.player).getShieldAmount());
+                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
+
+            }
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
                 shieldRegen(event.player);
             }
         }
     }
-    @SubscribeEvent
-    public static void onShieldRefresh(TickEvent.PlayerTickEvent event){
-        if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 10 == 0) {
-            Shield shield = getPlayerShield(event.player);
-            Shield.getPlayerShield(event.player).refreshPlayerMaxShield();
-            float newShieldAmount = shield.getShieldAmount();
-
-            if (newShieldAmount > 0) {
-                var pkt = new SyncShieldAmount.shieldAmountData(newShieldAmount);
-                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
-            }
-            if (newShieldAmount < 0) {
-                var pkt = new SyncShieldAmount.shieldAmountData(0.5F);
-                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
-            }
-        }
-    }
-//    @SubscribeEvent
-//    public static void onPlayerLogin( event){
-//        if (!event.side.isClient() && event.phase == TickEvent.Phase.END && event.player.tickCount % 10 == 0) {
-//            Shield shield = getPlayerShield(event.player);
-//            Shield.getPlayerShield(event.player).refreshPlayerMaxShield();
-//            float newShieldAmount = shield.getShieldAmount();
-//
-//            if (newShieldAmount > 0) {
-//                var pkt = new SyncShieldSystem.ShieldData(newShieldAmount);
-//                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
-//            }
-//            if (newShieldAmount < 0) {
-//                var pkt = new SyncShieldSystem.ShieldData(0.5F);
-//                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
-//            }
-//        }
-//    }
 //    @SubscribeEvent
 //    public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
 //        if (event.getEntity() instanceof ServerPlayer player){
@@ -92,7 +65,7 @@ public class Shield {
 //            Shield.getPlayerShield(player).refreshPlayerMaxShield();
 //        }
 //    }
-    private float refreshPlayerMaxShield() {
+    public void refreshPlayerMaxShield() {
         int enchantmentLevel = 0;
         int EffectLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -106,9 +79,7 @@ public class Shield {
             }
         }
         float newMaxShieldAmount = 4 + (enchantmentLevel * 2) + (EffectLevel * 8F);
-//        var pkt = new SyncShieldMax.shieldMaxData(newMaxShieldAmount);
-//        PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
-        return newMaxShieldAmount;
+        setMaxShieldAmount(newMaxShieldAmount);
     }
 
     public float getShieldAmount() {
@@ -123,6 +94,6 @@ public class Shield {
         return this.shieldAmount = shieldAmount;
     }
     public float setMaxShieldAmount(float maxShieldAmount) {
-        return this.shieldAmount = maxShieldAmount;
+        return this.maxShieldAmount = maxShieldAmount;
     }
 }
