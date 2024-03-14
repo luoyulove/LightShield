@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 
 import static luoyu.lightshield.Effects.EffectInit.EFFECT;
 import static luoyu.lightshield.Enchantment.EnchantInit.ENCHANTMENTS;
-import static luoyu.lightshield.Items.ItemInit.MOD_ITEMS;
+//import static luoyu.lightshield.Items.ItemInit.MOD_ITEMS;
 import static luoyu.lightshield.Items.Potion.PotionInit.POTION;
 
 
@@ -74,7 +74,7 @@ public class LightShield
 
         EFFECT.register(modEventBus);
         POTION.register(modEventBus);
-        MOD_ITEMS.register(modEventBus);
+//        MOD_ITEMS.register(modEventBus);
 
         ENCHANTMENTS.register(modEventBus);
         // Register the Deferred Register to the mod event bus so blocks get registered

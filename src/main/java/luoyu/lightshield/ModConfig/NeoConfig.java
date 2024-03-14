@@ -1,6 +1,5 @@
 package luoyu.lightshield.ModConfig;
 
-
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class NeoConfig implements Config{
@@ -11,11 +10,12 @@ public class NeoConfig implements Config{
 
         static {
             BUILDER.push("overlay");
-            ENABLE_OVERLAY = BUILDER.comment("Enable Shield Overlay\n是否启动护盾渲染").define("EnableShieldOverlay", true);
+            ENABLE_OVERLAY = BUILDER.comment("Enable Shield Overlay\n启动护盾渲染").define("EnableShieldOverlay", true);
             BUILDER.pop();
         }
         public static ModConfigSpec CONFIG = BUILDER.build();
     }
+    @Override
     public boolean getConfigOverlay(){
         return Config.ENABLE_OVERLAY.get();
     }
