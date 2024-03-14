@@ -41,7 +41,7 @@ public class ShieldDamageEvent {
 
                 float finalDamage = 0;
                 if (shield.getShieldAmount() - originalDamage <= 0){
-                    int ShieldCooldown = (int) (shield.getMaxShieldAmount() / player.getMaxHealth() * 12);
+                    int ShieldCooldown = (int) Math.min(((shield.getMaxShieldAmount() / player.getMaxHealth()) * 12) * 20, 12);
 
                     finalDamage = -(shield.getShieldAmount());
                     shield.setShieldAmount(0);
