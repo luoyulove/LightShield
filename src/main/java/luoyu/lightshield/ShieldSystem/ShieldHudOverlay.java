@@ -10,13 +10,10 @@ import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIEL
 import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_III;
 
 public class ShieldHudOverlay {
-    public static Player getPlayer(){
-        return Minecraft.getInstance().player;
-    }
     public static final IGuiOverlay HUD_SHIELD = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
         int x = screenWidth / 2;
         int y = screenHeight;
-        Player player = getPlayer();
+        Player player = Minecraft.getInstance().player;
 
         if (!new NeoConfig().getConfigOverlay()) {
             return;
