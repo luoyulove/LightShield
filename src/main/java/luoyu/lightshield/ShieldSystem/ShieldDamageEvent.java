@@ -41,11 +41,11 @@ public class ShieldDamageEvent {
 
                 float finalDamage = 0;
                 if (shield.getShieldAmount() - originalDamage <= 0){
-                    int ShieldCooldown = (int) ((shield.getMaxShieldAmount() / player.getMaxHealth()) * 800);
+                    int ShieldCooldown = (int) ((shield.getMaxShieldAmount() / player.getMaxHealth()));
 
                     finalDamage = -(shield.getShieldAmount());
                     shield.setShieldAmount(0);
-                    player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_COOLDOWN.get(), Math.min(((ShieldCooldown + 60)), 240), 0, true, false));
+                    player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_COOLDOWN.get(), Math.min(((ShieldCooldown + 3) * 20), 240), 0, true, false));
                 }
                 e.setAmount(finalDamage);
 
