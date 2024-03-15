@@ -78,7 +78,7 @@ public class Shield {
                 EffectLevel = effect.getAmplifier();
             }
         }
-        float newMaxShieldAmount = 4 + (enchantmentLevel * 2) + (EffectLevel * 4F);
+        float newMaxShieldAmount = (4 + (enchantmentLevel * 1) + (EffectLevel * 4F));
         setMaxShieldAmount(newMaxShieldAmount);
     }
 
