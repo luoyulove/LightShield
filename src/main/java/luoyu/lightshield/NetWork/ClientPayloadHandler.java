@@ -29,4 +29,18 @@ public class ClientPayloadHandler {
                     return null;
                 });
     }
+//    public void handleShieldMaxAmountData(final SyncShieldAmount.shieldMaxAmountData shieldMaxAmountData, final PlayPayloadContext context) {
+//        Player player = context.player().get();
+//        float maxShieldAmount = shieldMaxAmountData.shieldAmount();
+//
+//        context.workHandler().submitAsync(() -> {
+//                    Shield shield = Shield.getPlayerShield(player);
+//                    shield.setShieldAmount(maxShieldAmount);
+//                })
+//                .exceptionally(e -> {
+//                    context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
+//                    LOGGER.info(String.valueOf(maxShieldAmount));
+//                    return null;
+//                });
+//    }
 }

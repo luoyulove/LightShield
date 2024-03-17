@@ -1,5 +1,7 @@
 package luoyu.lightshield.ShieldSystem;
 
+import luoyu.lightshield.ModConfig.Config;
+import luoyu.lightshield.ModConfig.DefaultConfig;
 import luoyu.lightshield.NetWork.SyncShieldAmount;
 import luoyu.lightshield.Effects.ShieldMaxEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
@@ -31,7 +33,7 @@ public class Shield {
     public Shield(Player player) {
         this.player = player;
         this.shieldAmount = 0;
-        this.maxShieldAmount = 0;
+        this.setPlayerMaxShield();
     }
 
     public static Shield getPlayerShield(Player player) {
@@ -39,7 +41,7 @@ public class Shield {
         if (!PlayerShieldMap.containsKey(playerUUID)) {
             PlayerShieldMap.put(playerUUID, new Shield(player));
         } else {
-            PlayerShieldMap.get(playerUUID).refreshPlayerMaxShield();
+            PlayerShieldMap.get(playerUUID).setPlayerMaxShield();
         }
         return PlayerShieldMap.get(playerUUID);
     }
@@ -47,7 +49,7 @@ public class Shield {
     public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
         if (!event.side.isClient()) {
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 40 == 0) {
-                Shield.getPlayerShield(event.player).refreshPlayerMaxShield();
+                Shield.getPlayerShield(event.player).setPlayerMaxShield();
 
                 var pkt = new SyncShieldAmount.shieldAmountData(getPlayerShield(event.player).getShieldAmount());
                 PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
@@ -65,7 +67,7 @@ public class Shield {
 //            Shield.getPlayerShield(player).refreshPlayerMaxShield();
 //        }
 //    }
-    public void refreshPlayerMaxShield() {
+    public void setPlayerMaxShield() {
         int enchantmentLevel = 0;
         int EffectLevel = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -78,7 +80,8 @@ public class Shield {
                 EffectLevel = effect.getAmplifier();
             }
         }
-        float newMaxShieldAmount = (4 + (enchantmentLevel * 1) + (EffectLevel * 4F));
+        float newMaxShieldAmount = (4 + (enchantmentLevel * 1) + (EffectLevel * 4));
+
         setMaxShieldAmount(newMaxShieldAmount);
     }
 

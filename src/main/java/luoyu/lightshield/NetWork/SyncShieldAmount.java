@@ -27,10 +27,32 @@ public class SyncShieldAmount {
             return ID;
         }
         @SubscribeEvent
-        public static void registerServerPayload(final RegisterPayloadHandlerEvent event) {
+        public static void registerShieldAmountPayload(final RegisterPayloadHandlerEvent event) {
             final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
             registrar.play(shieldAmountData.ID, shieldAmountData::new, handler -> handler
                     .client(ClientPayloadHandler.getClient()::handleShieldAmountData));
         }
     }
+//    public record shieldMaxAmountData(float shieldAmount) implements CustomPacketPayload {
+//
+//        public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
+//
+//        public shieldMaxAmountData(final FriendlyByteBuf buffer) {
+//            this(buffer.readFloat());
+//        }
+//        @Override
+//        public void write(final FriendlyByteBuf buffer) {
+//            buffer.writeFloat(this.shieldAmount);
+//        }
+//        @Override
+//        public ResourceLocation id() {
+//            return ID;
+//        }
+//        @SubscribeEvent
+//        public static void registerShieldMaxAmountPayload(final RegisterPayloadHandlerEvent event) {
+//            final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
+//            registrar.play(shieldMaxAmountData.ID, shieldMaxAmountData::new, handler -> handler
+//                    .client(ClientPayloadHandler.getClient()::handleShieldMaxAmountData));
+//        }
+//    }
 }

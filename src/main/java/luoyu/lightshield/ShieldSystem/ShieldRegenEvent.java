@@ -45,6 +45,10 @@ public class ShieldRegenEvent {
         if (shield.getShieldAmount() > shield.getMaxShieldAmount()) {
             shield.setShieldAmount(shield.getMaxShieldAmount());
         }
+        if (shield.getShieldAmount() < 0){
+            shield.setShieldAmount(0);
+        }
+
         var pkt = new SyncShieldAmount.shieldAmountData(getPlayerShield(player).getShieldAmount());
         PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
     }
