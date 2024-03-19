@@ -55,7 +55,7 @@ public class Shield {
                 PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
 
             }
-            if (event.phase == TickEvent.Phase.END && event.player.tickCount % 100 == 0) {
+            if (event.phase == TickEvent.Phase.END && event.player.tickCount % 20 == 0) {
                 shieldRegen(event.player);
             }
         }

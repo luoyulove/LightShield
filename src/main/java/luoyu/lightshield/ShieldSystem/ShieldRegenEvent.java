@@ -33,7 +33,7 @@ public class ShieldRegenEvent {
                 return 0;
             }
         }
-        return 1 + (enchantmentLevel * 0.25F) + (EffectLevel * 0.5F);
+        return (0.2F + ((enchantmentLevel * 0.05F) + (EffectLevel * 0.1F)));
     }
     public static void shieldRegen(Player player){
         Shield shield = getPlayerShield(player);
