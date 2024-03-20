@@ -6,7 +6,7 @@ public interface Config {
 
 //    Double setShieldAmountMultiple();
 //
-//    Double getShieldAmountMultiple()
+//    Double getShieldAmountMultiple();
 //
 //    Double setShieldMaxAmountMultiple();
 //    Double getShieldMaxAmountMultiple();
