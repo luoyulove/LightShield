@@ -2,6 +2,7 @@ package luoyu.lightshield.ShieldSystem;
 
 import luoyu.lightshield.Effects.ShieldMaxEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
+import luoyu.lightshield.NetWork.NetWorkPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,11 +11,13 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.NetworkDirection;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import static luoyu.lightshield.NetWork.NetWorkHandler.CHANNEL;
 import static luoyu.lightshield.ShieldSystem.ShieldRegenEvent.shieldRegen;
 
 @Mod.EventBusSubscriber
@@ -45,7 +48,6 @@ public class Shield {
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 40 == 0) {
                 Shield.getPlayerShield(event.player).setPlayerMaxShield();
                 ServerPlayer player = (ServerPlayer) event.player;
-
             }
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 20 == 0) {
                 shieldRegen(event.player);
@@ -73,7 +75,6 @@ public class Shield {
             }
         }
         float newMaxShieldAmount = (4 + (enchantmentLevel * 1) + (EffectLevel * 4));
-
         setMaxShieldAmount(newMaxShieldAmount);
     }
 
