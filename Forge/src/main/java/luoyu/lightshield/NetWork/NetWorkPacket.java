@@ -14,7 +14,7 @@ import static luoyu.lightshield.NetWork.NetWorkHandler.CHANNEL;
 
 public class NetWorkPacket {
     public static class NetWorkPacketd {
-        public float shieldAmount;
+        public static float shieldAmount;
 
         public NetWorkPacketd(float shieldAmount) {
             this.shieldAmount = shieldAmount;
