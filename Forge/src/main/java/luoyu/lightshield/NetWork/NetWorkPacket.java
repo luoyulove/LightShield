@@ -26,12 +26,16 @@ public class NetWorkPacket {
         public static NetWorkPacketd decode(FriendlyByteBuf buffer) {
             return new NetWorkPacketd(buffer.readFloat());
         }
-        private static Player getPlayer() {
-            return Minecraft.getInstance().player;
+        private static Player getPlayer(NetworkEvent.Context context) {
+            return context.getSender();
+//            return Minecraft.getInstance().player;
         }
         public static void handle(luoyu.lightshield.NetWork.NetWorkPacket.NetWorkPacketd packet, Supplier<NetworkEvent.Context> context) {
             context.get().enqueueWork(() -> {
-                    updateShieldAmount(Minecraft.getInstance().player,packet.shieldAmount);
+                Player player = getPlayer(context.get());
+                if (player != null) {
+                    updateShieldAmount(player,NetWorkPacketd.shieldAmount);
+                }
             });
             context.get().setPacketHandled(true);
         }
