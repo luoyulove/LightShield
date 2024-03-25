@@ -4,7 +4,6 @@ import luoyu.lightshield.ShieldSystem.Shield;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.util.function.Supplier;
 
