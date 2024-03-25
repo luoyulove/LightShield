@@ -2,6 +2,9 @@ package luoyu.lightshield.ShieldSystem;
 
 import luoyu.lightshield.Effects.ShieldMaxEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
+import luoyu.lightshield.NetWork.NetWorkPayload;
+import luoyu.lightshield.NetWork.ShieldAmountPacket;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -10,12 +13,15 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import static luoyu.lightshield.ShieldSystem.ShieldRegenEvent.shieldRegen;
+import static luoyu.lightshield.ShieldSystem.ShieldRegenEvent.shieldRegenAmount;
 
 @Mod.EventBusSubscriber
 public class Shield {
@@ -45,9 +51,8 @@ public class Shield {
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 40 == 0) {
                 Shield.getPlayerShield(event.player).setPlayerMaxShield();
 
-//                var pkt = new SyncShieldAmount.shieldAmountData(getPlayerShield(event.player).getShieldAmount());
-//                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
-
+                ShieldAmountPacket packet = new ShieldAmountPacket(getPlayerShield(event.player).getShieldAmount());
+                PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.player).send((Packet<?>) packet);
             }
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 20 == 0) {
                 shieldRegen(event.player);
