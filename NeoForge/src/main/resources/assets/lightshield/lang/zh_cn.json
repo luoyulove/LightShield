@@ -1,0 +1,26 @@
+{
+    "enchantment.lightshield.shield_regen": "护盾充能",
+    "enchantment.lightshield.shield_regen.desc": "增加单次护盾恢复量，每级增加 0.25 点",
+
+    "enchantment.lightshield.shield_max": "护盾上限",
+    "enchantment.lightshield.shield_max.desc": "增加护盾上限，每级增加 1 点",
+
+    "enchantment.lightshield.shield_defense": "护盾防御",
+    "enchantment.lightshield.shield_defense.desc": "减少护盾所受到的伤害，每级减少 2.5%",
+
+    "effect.lightshield.shield_max": "护盾上限",
+    "effect.lightshield.shield_regen": "护盾恢复",
+    "effect.lightshield.shield_cooldown": "护盾冷却",
+
+    "item.minecraft.potion.effect.shield_max": "护盾上限药水",
+    "item.minecraft.splash_potion.effect.shield_max": "喷射型护盾上限药水",
+    "item.minecraft.lingering_potion.effect.shield_max": "滞留型护盾上限药水",
+
+    "item.minecraft.potion.effect.shield_regen": "护盾恢复药水",
+    "item.minecraft.splash_potion.effect.shield_regen": "喷射型护盾恢复药水",
+    "item.minecraft.lingering_potion.effect.shield_regen": "滞留型护盾恢复药水",
+
+    "item.minecraft.potion.effect.shield_cooldown": "护盾冷却药水",
+    "item.minecraft.splash_potion.effect.shield_cooldown": "喷射型护盾冷却药水",
+    "item.minecraft.lingering_potion.effect.shield_cooldown": "滞留型护盾冷却药水"
+}
