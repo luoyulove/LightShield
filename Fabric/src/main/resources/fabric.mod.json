@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "modid",
+  "version": "${version}",
+  "name": "Mod Name",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://example.com"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/modid/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.example.ModFabricClient"
+    ],
+    "main": [
+      "com.example.ModFabric"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  },
+  "mixins": [
+    "modid.mixins.json"
+  ]
+}
