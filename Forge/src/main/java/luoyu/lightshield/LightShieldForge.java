@@ -1,5 +1,6 @@
 package luoyu.lightshield;
 
+import luoyu.lightshield.NetWork.NetWorkHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -22,6 +23,7 @@ public class LightShieldForge {
         MinecraftForge.EVENT_BUS.register(this);
         EFFECT.register(modEventBus);
         ENCHANTMENTS.register(modEventBus);
+        NetWorkHandler.init();
 
         modEventBus.addListener(this::commonSetup);
     }
