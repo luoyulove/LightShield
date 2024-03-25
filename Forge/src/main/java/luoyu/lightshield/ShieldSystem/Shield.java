@@ -52,7 +52,7 @@ public class Shield {
                 Shield.getPlayerShield(event.player).setPlayerMaxShield();
 
                 ShieldAmountPacket packet = new ShieldAmountPacket(getPlayerShield(event.player).getShieldAmount());
-                PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.player).send((Packet<?>) packet);
+                PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.player).send(packet);
             }
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 20 == 0) {
                 shieldRegen(event.player);
