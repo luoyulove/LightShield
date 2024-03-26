@@ -27,9 +27,6 @@ public class ShieldDamageEvent {
             float originalDamage = e.getAmount();
 
             if (shield.getShieldAmount() > 0) {
-                if (e.getEntity().getAbsorptionAmount() == 0) {
-                    player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_COOLDOWN.get(), 40, 0, false, true));
-                }
                 int enchantmentLevel = 0;
                 for (EquipmentSlot slot : EquipmentSlot.values()) {
                     if (slot.getType() == EquipmentSlot.Type.ARMOR) {
@@ -39,6 +36,12 @@ public class ShieldDamageEvent {
                 }
                 float EnchantReduce = 1 - (0.025F * enchantmentLevel);
                 originalDamage = originalDamage * EnchantReduce;
+
+                if (e.getEntity().getAbsorptionAmount() == 0) {
+                    if (originalDamage > (shield.getMaxShieldAmount() * 0.2)) {
+                        player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_COOLDOWN.get(), 40, 0, false, true));
+                    }
+                }
 
                 shield.setShieldAmount(shield.getShieldAmount() - originalDamage);
 

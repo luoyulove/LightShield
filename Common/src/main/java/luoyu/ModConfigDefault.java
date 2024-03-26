@@ -9,5 +9,7 @@ public class ModConfigDefault implements ModConfig{
         return true;
     }
     @Override
-    public void EnableOverlay(boolean enable) {}
+    public void EnableOverlay(boolean enable){
+
+    }
 }
