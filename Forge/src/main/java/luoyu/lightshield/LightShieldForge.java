@@ -20,11 +20,11 @@ public class LightShieldForge {
     public LightShieldForge() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        MinecraftForge.EVENT_BUS.register(this);
         EFFECT.register(modEventBus);
         ENCHANTMENTS.register(modEventBus);
-        NetWorkHandler.init();
+        NetWorkHandler.NetWorkInit();
 
+        MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::commonSetup);
     }
 

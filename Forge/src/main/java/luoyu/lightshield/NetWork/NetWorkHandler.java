@@ -12,18 +12,23 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 import static luoyu.ModStatic.MOD_ID;
 
+@Mod.EventBusSubscriber
 public class NetWorkHandler {
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(MOD_ID, "network"), () -> ".", s -> true, s -> true
+            new ResourceLocation(MOD_ID, "network"), () -> "1", s -> true, s -> true
     );
-    public static void init() {
-        CHANNEL.registerMessage(0, NetWorkPacket.NetWorkPacketd.class, NetWorkPacket.NetWorkPacketd::encode, NetWorkPacket.NetWorkPacketd::decode, NetWorkPacket.NetWorkPacketd::handle);
+    public static void NetWorkInit() {
+        CHANNEL.registerMessage(0,
+                NetWorkPacket.ShieldPacket.class,
+                NetWorkPacket.ShieldPacket::encode,
+                NetWorkPacket.ShieldPacket::decode,
+                NetWorkPacket.ShieldPacket::handle);
     }
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event){
+    public static void onNetWorkTick(TickEvent.PlayerTickEvent event){
         if (event.player instanceof ServerPlayer player){
             float shieldAmount = Shield.getPlayerShield(player).getShieldAmount();
-            CHANNEL.sendTo(new NetWorkPacket.NetWorkPacketd(shieldAmount), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+            CHANNEL.sendTo(new NetWorkPacket.ShieldPacket(shieldAmount), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 }

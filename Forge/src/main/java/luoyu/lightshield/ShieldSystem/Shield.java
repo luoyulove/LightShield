@@ -45,10 +45,6 @@ public class Shield {
     @SubscribeEvent
     public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
         if (!event.side.isClient()) {
-            if (event.phase == TickEvent.Phase.END && event.player.tickCount % 40 == 0) {
-                Shield.getPlayerShield(event.player).setPlayerMaxShield();
-                ServerPlayer player = (ServerPlayer) event.player;
-            }
             if (event.phase == TickEvent.Phase.END && event.player.tickCount % 20 == 0) {
                 shieldRegen(event.player);
             }

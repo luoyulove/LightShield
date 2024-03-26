@@ -1,5 +1,6 @@
 package luoyu.lightshield.NetWork;
 
+import luoyu.lightshield.Api;
 import luoyu.lightshield.ShieldSystem.Shield;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,33 +14,32 @@ import java.util.function.Supplier;
 import static luoyu.lightshield.NetWork.NetWorkHandler.CHANNEL;
 
 public class NetWorkPacket {
-    public static class NetWorkPacketd {
-        public static float shieldAmount;
+    public static class ShieldPacket {
+        public float shieldAmount;
 
-        public NetWorkPacketd(float shieldAmount) {
+        public ShieldPacket(float shieldAmount) {
             this.shieldAmount = shieldAmount;
         }
 
-        public static void encode(NetWorkPacketd packet, FriendlyByteBuf buffer) {
+        public static void encode(ShieldPacket packet, FriendlyByteBuf buffer) {
             buffer.writeFloat(packet.shieldAmount);
         }
-        public static NetWorkPacketd decode(FriendlyByteBuf buffer) {
-            return new NetWorkPacketd(buffer.readFloat());
+        public static ShieldPacket decode(FriendlyByteBuf buffer) {
+            return new ShieldPacket(buffer.readFloat());
         }
         private static Player getPlayer(NetworkEvent.Context context) {
-            return context.getSender();
-//            return Minecraft.getInstance().player;
+            return context.getDirection() == NetworkDirection.PLAY_TO_SERVER ? context.getSender() : Minecraft.getInstance().player;
         }
-        public static void handle(luoyu.lightshield.NetWork.NetWorkPacket.NetWorkPacketd packet, Supplier<NetworkEvent.Context> context) {
+        public static void handle(ShieldPacket packet, Supplier<NetworkEvent.Context> context) {
             context.get().enqueueWork(() -> {
                 Player player = getPlayer(context.get());
-                if (player != null) {
-                    updateShieldAmount(player,NetWorkPacketd.shieldAmount);
-                }
+                    updateShieldAmount(player,packet.shieldAmount);
+                    Shield.getPlayerShield(player).setShieldAmount(packet.shieldAmount);
             });
             context.get().setPacketHandled(true);
         }
         public static void updateShieldAmount(Player player, float shieldAmount) {
+            Api.setShieldAmount(player, shieldAmount);
             Shield.getPlayerShield(player).setShieldAmount(shieldAmount);
         }
     }

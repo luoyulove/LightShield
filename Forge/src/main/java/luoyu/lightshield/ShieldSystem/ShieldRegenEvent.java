@@ -12,7 +12,6 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.network.NetworkDirection;
 
 import static luoyu.lightshield.NetWork.NetWorkHandler.CHANNEL;
-import static luoyu.lightshield.NetWork.NetWorkPacket.NetWorkPacketd.shieldAmount;
 import static luoyu.lightshield.ShieldSystem.Shield.getPlayerShield;
 
 public class ShieldRegenEvent {
@@ -41,15 +40,12 @@ public class ShieldRegenEvent {
         float newShieldAmount = Math.min(shield.getShieldAmount() + shieldRegenAmount(player), shield.getMaxShieldAmount());
         shield.setShieldAmount(newShieldAmount);
 
-        if (player instanceof ServerPlayer serverPlayer) {
-            CHANNEL.sendTo(new NetWorkPacket.NetWorkPacketd(shieldAmount), serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-        }
+//        if (player instanceof ServerPlayer serverPlayer) {
+//            CHANNEL.sendTo(new NetWorkPacket.NetWorkPacketd(shieldAmount), serverPlayer.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+//        }
 
         if (shield.getShieldAmount() > shield.getMaxShieldAmount()) {
             shield.setShieldAmount(shield.getMaxShieldAmount());
-        }
-        if (shield.getShieldAmount() < 0){
-            shield.setShieldAmount(0);
         }
     }
 }
