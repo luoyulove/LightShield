@@ -1,3 +1,3 @@
 # LightShield
 
-Add ShieldSystem for Minecraft
+Add ShieldSystem for Minecraft.
