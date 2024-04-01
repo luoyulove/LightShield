@@ -50,13 +50,6 @@ public class Shield {
             }
         }
     }
-//    @SubscribeEvent
-//    public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
-//        if (event.getEntity() instanceof ServerPlayer player){
-////            player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_REGEN.get(), 600, 5, true, false));
-//            Shield.getPlayerShield(player).refreshPlayerMaxShield();
-//        }
-//    }
     public void setPlayerMaxShield() {
         int enchantmentLevel = 0;
         int EffectLevel = 0;

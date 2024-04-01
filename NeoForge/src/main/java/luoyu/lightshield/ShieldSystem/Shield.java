@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.mojang.text2speech.Narrator.LOGGER;
 import static luoyu.lightshield.ShieldSystem.ShieldRegenEvent.shieldRegen;
 
 @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.FORGE)

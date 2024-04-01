@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.PlayPayloadContext;
 
 
-import static com.mojang.text2speech.Narrator.LOGGER;
+//import static com.mojang.text2speech.Narrator.LOGGER;
 
 public class ClientPayloadHandler {
     private static final ClientPayloadHandler Client = new ClientPayloadHandler();
@@ -25,7 +25,7 @@ public class ClientPayloadHandler {
         })
                 .exceptionally(e -> {
                     context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
-                    LOGGER.info(String.valueOf(shieldAmount));
+//                    LOGGER.info(String.valueOf(shieldAmount));
                     return null;
                 });
     }

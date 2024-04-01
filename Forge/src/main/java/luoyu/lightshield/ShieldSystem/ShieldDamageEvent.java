@@ -50,13 +50,6 @@ public class ShieldDamageEvent {
                     player.addEffect(new MobEffectInstance(EffectInit.SHIELD_COOLDOWN.get(), Math.min((int) (((ShieldCooldown * 8) + 3) * 20), 240), 0, false, true));
                 }
                 e.setAmount(finalDamage);
-
-//                var pkt = new SyncShieldAmount.shieldAmountData(shield.getShieldAmount());
-//                PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
-//                LOGGER.info("调试：" + "当前护盾：" + shield.getShieldAmount());
-//                LOGGER.info("调试：" + "护盾上限：" + shield.getMaxShieldAmount());
-//                LOGGER.info("调试：" + "护盾吸收："  + shieldAbsorbedDamage + "(减免"+(originalDamage - ReduceDamage)+")");
-//                LOGGER.info("调试：" + "最终伤害：" + finalDamage);
             }
         }
     }

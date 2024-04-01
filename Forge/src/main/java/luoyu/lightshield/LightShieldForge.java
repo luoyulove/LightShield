@@ -33,7 +33,7 @@ public class LightShieldForge {
         config = new ForgeConfig();
 
         MinecraftForge.EVENT_BUS.register(this);
-        modEventBus.addListener(this::commonSetup);
+//        modEventBus.addListener(this::commonSetup);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
