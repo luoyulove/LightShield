@@ -26,11 +26,9 @@ public class NetWorkHandler {
     }
     @SubscribeEvent
     public static void onNetWorkTick(TickEvent.PlayerTickEvent event){
-        if (!event.side.isClient()){
-            if (event.player instanceof ServerPlayer player) {
-                float shieldAmount = Shield.getPlayerShield(player).getShieldAmount();
-                CHANNEL.sendTo(new NetWorkPacket.ShieldPacket(shieldAmount), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
-            }
+        if (event.player instanceof ServerPlayer player) {
+            float shieldAmount = Shield.getPlayerShield(player).getShieldAmount();
+            CHANNEL.sendTo(new NetWorkPacket.ShieldPacket(shieldAmount), player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
         }
     }
 }

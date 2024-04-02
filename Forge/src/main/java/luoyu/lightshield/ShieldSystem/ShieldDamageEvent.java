@@ -33,7 +33,7 @@ public class ShieldDamageEvent {
                 float EnchantReduce = 1 - (0.025F * enchantmentLevel);
                 originalDamage = originalDamage * EnchantReduce;
 
-                if (e.getEntity().getAbsorptionAmount() == 0) {
+                if (e.getEntity().getAbsorptionAmount() <= 1) {
                     if (originalDamage > (shield.getMaxShieldAmount() * 0.2)) {
                         player.addEffect(new MobEffectInstance(EffectInit.SHIELD_COOLDOWN.get(), 40, 0, false, true));
                     }

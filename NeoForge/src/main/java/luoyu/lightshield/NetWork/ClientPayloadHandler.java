@@ -22,12 +22,11 @@ public class ClientPayloadHandler {
         context.workHandler().submitAsync(() -> {
             Shield shield = Shield.getPlayerShield(player);
             shield.setShieldAmount(shieldAmount);
-        })
-                .exceptionally(e -> {
-                    context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
-//                    LOGGER.info(String.valueOf(shieldAmount));
-                    return null;
-                });
+        }).exceptionally(e -> {
+            context.packetHandler().disconnect(Component.translatable("LightShield.networking.failed", e.getMessage()));
+//          LOGGER.info(String.valueOf(shieldAmount));
+            return null;
+        });
     }
 //    public void handleShieldMaxAmountData(final SyncShieldAmount.shieldMaxAmountData shieldMaxAmountData, final PlayPayloadContext context) {
 //        Player player = context.player().get();
