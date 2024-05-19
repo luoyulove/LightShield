@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,12 +25,16 @@ public class ShieldDamageEvent {
 
             if (shield.getShieldAmount() > 0) {
                 int enchantmentLevel = 0;
+
                 for (EquipmentSlot slot : EquipmentSlot.values()) {
                     if (slot.getType() == EquipmentSlot.Type.ARMOR) {
-                        enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_DEFENSE.get(), player);
+                        ItemStack armorStack = player.getItemBySlot(slot);
+                        if (!armorStack.isEmpty()) {
+                            enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_MAX.get(), player);
+                        }
                     }
-                    enchantmentLevel = Math.min(enchantmentLevel, 20);
                 }
+
                 float EnchantReduce = 1 - (0.025F * enchantmentLevel);
                 originalDamage = originalDamage * EnchantReduce;
 

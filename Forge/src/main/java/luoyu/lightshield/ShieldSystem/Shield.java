@@ -2,16 +2,16 @@ package luoyu.lightshield.ShieldSystem;
 
 import luoyu.lightshield.Effects.ShieldMaxEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
-import luoyu.lightshield.NetWork.NetWorkPacket;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.network.NetworkDirection;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,18 +54,31 @@ public class Shield {
     public void setPlayerMaxShield() {
         int enchantmentLevel = 0;
         int EffectLevel = 0;
+
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.getType() == EquipmentSlot.Type.ARMOR) {
-                enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_MAX.get(), player);
+                ItemStack armorStack = player.getItemBySlot(slot);
+                if (!armorStack.isEmpty()) {
+//                    enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_MAX.get(), player);
+                    enchantmentLevel += EnchantmentHelper.getTagEnchantmentLevel(EnchantInit.SHIELD_DEFENSE.get(), armorStack);
+                }
             }
         }
+
         for (MobEffectInstance effect : player.getActiveEffects()){
             if (effect.getEffect() instanceof ShieldMaxEffect){
                 EffectLevel = effect.getAmplifier();
             }
         }
-        float newMaxShieldAmount = (4 + (enchantmentLevel * 1) + (EffectLevel * 4));
-        setMaxShieldAmount(newMaxShieldAmount);
+        float MaxShieldAmount = 4 + (enchantmentLevel * 1) + (EffectLevel * 4);
+        setMaxShieldAmount(MaxShieldAmount);
+//
+//        float ShieldAmount = getShieldAmount();
+//
+//        String ShieldAmountValue = Float.toString(ShieldAmount);
+//
+//        Component message = Component.nullToEmpty(ShieldAmountValue);
+//        player.sendSystemMessage(message);
     }
 
     public float getShieldAmount() {

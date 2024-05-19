@@ -12,9 +12,11 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+// 在这里调整要加载的模组项目
+
 rootProject.name = 'LightShield'
 include 'Common'
 include 'Forge'
-include 'Fabric'
-include 'NeoForge'
+//include 'Fabric'
+//include 'NeoForge'
 

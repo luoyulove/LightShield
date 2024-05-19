@@ -22,7 +22,8 @@ public class ShieldHudOverlay {
             return;
         }
 
-        float shieldAmount = Api.getShieldAmount(player);
+//        float shieldAmount = Api.getShieldAmount(player);
+        float shieldAmount = Shield.getPlayerShield(player).getShieldAmount();
 
         int shieldCount_I = (int) (shieldAmount / 2);
         int shieldCount_II = (int) ((shieldAmount / 2) - 10);
