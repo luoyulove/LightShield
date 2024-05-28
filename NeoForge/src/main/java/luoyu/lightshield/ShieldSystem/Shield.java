@@ -12,8 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.event.TickEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.HashMap;
@@ -22,7 +21,7 @@ import java.util.UUID;
 
 import static luoyu.lightshield.ShieldSystem.ShieldRegenEvent.shieldRegen;
 
-@Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod("LightShield")
 public class Shield {
     private static final Map<UUID, Shield> PlayerShieldMap = new HashMap<>();
     private final Player player;
@@ -45,27 +44,22 @@ public class Shield {
         return PlayerShieldMap.get(playerUUID);
     }
     @SubscribeEvent
-    public static void onShieldRegen(TickEvent.PlayerTickEvent event) {
-        if (!event.side.isClient()) {
-            if (event.phase == TickEvent.Phase.END && event.player.tickCount % 40 == 0) {
-                Shield.getPlayerShield(event.player).setPlayerMaxShield();
+    public static void onShieldRegen(PlayerTickEvent event) {
+        if (event.getEntity().isAlive()) {
 
-                var pkt = new SyncShieldAmount.shieldAmountData(getPlayerShield(event.player).getShieldAmount());
-                PacketDistributor.PLAYER.with((ServerPlayer) event.player).send(pkt);
+            if (event.getEntity().isAlive() && event.getEntity().tickCount % 40 == 0) {
+                Shield.getPlayerShield(event.getEntity()).setPlayerMaxShield();
+
+                var pkt = new SyncShieldAmount.shieldAmountData(getPlayerShield(event.getEntity()).getShieldAmount());
+                PacketDistributor.sendToPlayer((ServerPlayer)event.getEntity(),pkt);
 
             }
-            if (event.phase == TickEvent.Phase.END && event.player.tickCount % 20 == 0) {
-                shieldRegen(event.player);
+            if (event.getEntity().isAlive() && event.getEntity().tickCount % 40 == 0) {
+                shieldRegen(event.getEntity());
             }
         }
     }
-//    @SubscribeEvent
-//    public static void onPlayerSpawn(PlayerEvent.PlayerRespawnEvent event){
-//        if (event.getEntity() instanceof ServerPlayer player){
-////            player.addEffect(new MobEffectInstance(EffectInit.EFFECT_SHIELD_REGEN.get(), 600, 5, true, false));
-//            Shield.getPlayerShield(player).refreshPlayerMaxShield();
-//        }
-//    }
+
     public void setPlayerMaxShield() {
         int enchantmentLevel = 0;
         int EffectLevel = 0;

@@ -3,23 +3,22 @@ package luoyu.lightshield.Enchantment;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
-
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import org.jetbrains.annotations.Contract;
 
 
 public class ShieldRegenEnchant extends Enchantment{
     public ShieldRegenEnchant() {
-        super(Rarity.RARE, EnchantmentCategory.ARMOR, new EquipmentSlot[]{
-                EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET
-        });
+        super(new EnchantmentDefinition());
     }
     @Override
     public boolean canEnchant(ItemStack itemStack){
         return itemStack.getItem() instanceof ArmorItem || super.canEnchant(itemStack);
     }
-    @Override
-    public int getMinCost(int level){
+    @Contract
+    public final int getMinCost(int level){
         return level * 12;
     }
     @Override

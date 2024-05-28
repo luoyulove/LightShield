@@ -1,58 +1,26 @@
 package luoyu.lightshield.NetWork;
 
-import luoyu.lightshield.LightShield;
-import net.minecraft.network.FriendlyByteBuf;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
 
 public class SyncShieldAmount {
-    @Mod.EventBusSubscriber(modid = "lightshield", bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod("lightshield")
     public record shieldAmountData(float shieldAmount) implements CustomPacketPayload {
 
-        public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
+        public static final CustomPacketPayload.Type<shieldAmountData> TYPE = new CustomPacketPayload.Type<>(new ResourceLocation("lightshield", "shieldamountdata"));
+        public static final StreamCodec<ByteBuf, shieldAmountData> STREAM_CODEC = StreamCodec.composite(
+                ByteBufCodecs.FLOAT,
+                shieldAmountData::shieldAmount,
+                shieldAmountData::new
+        );
 
-        public shieldAmountData(final FriendlyByteBuf buffer) {
-            this(buffer.readFloat());
-        }
         @Override
-        public void write(final FriendlyByteBuf buffer) {
-            buffer.writeFloat(this.shieldAmount);
-        }
-        @Override
-        public ResourceLocation id() {
-            return ID;
-        }
-        @SubscribeEvent
-        public static void registerShieldAmountPayload(final RegisterPayloadHandlerEvent event) {
-            final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
-            registrar.play(shieldAmountData.ID, shieldAmountData::new, handler -> handler
-                    .client(ClientPayloadHandler.getClient()::handleShieldAmountData));
+        public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+            return TYPE;
         }
     }
-//    public record shieldMaxAmountData(float shieldAmount) implements CustomPacketPayload {
-//
-//        public static final ResourceLocation ID = new ResourceLocation(LightShield.MOD_ID, "shieldamount");
-//
-//        public shieldMaxAmountData(final FriendlyByteBuf buffer) {
-//            this(buffer.readFloat());
-//        }
-//        @Override
-//        public void write(final FriendlyByteBuf buffer) {
-//            buffer.writeFloat(this.shieldAmount);
-//        }
-//        @Override
-//        public ResourceLocation id() {
-//            return ID;
-//        }
-//        @SubscribeEvent
-//        public static void registerShieldMaxAmountPayload(final RegisterPayloadHandlerEvent event) {
-//            final IPayloadRegistrar registrar = event.registrar(LightShield.MOD_ID);
-//            registrar.play(shieldMaxAmountData.ID, shieldMaxAmountData::new, handler -> handler
-//                    .client(ClientPayloadHandler.getClient()::handleShieldMaxAmountData));
-//        }
-//    }
 }

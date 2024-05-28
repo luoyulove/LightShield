@@ -4,8 +4,7 @@ import luoyu.lightshield.Api;
 import luoyu.lightshield.ModConfig.NeoConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
-
+import net.neoforged.neoforge.api.gui.IGuiOverlay;
 import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_II;
 import static luoyu.lightshield.Resource.ShieldResource.ClientModBusEvents.SHIELD_III;
 

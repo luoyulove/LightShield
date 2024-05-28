@@ -49,7 +49,7 @@ public class ShieldRegenEvent {
             shield.setShieldAmount(0);
         }
 
-        var pkt = new SyncShieldAmount.shieldAmountData(getPlayerShield(player).getShieldAmount());
-        PacketDistributor.PLAYER.with((ServerPlayer) player).send(pkt);
+        var pkt = new SyncShieldAmount.shieldAmountData(shield.getShieldAmount());
+        PacketDistributor.sendToPlayer((ServerPlayer) player,pkt);
     }
 }
