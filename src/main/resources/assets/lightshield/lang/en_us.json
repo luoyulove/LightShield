@@ -12,9 +12,9 @@
     "effect.lightshield.shield_max": "shield Max",
     "effect.lightshield.shield_cooldown": "shield Cooldown",
 
-    "attribute.lightshield.shield_max": "The attribute decided your shield limit",
-    "attribute.lightshield.shield_amount": "The attribute decided now you have how many shield",
-    "attribute.lightshield.shield_regen": "The attribute decided how many shields to regen each time",
+    "attribute.lightshield.shield_max": "shield Max",
+    "attribute.lightshield.shield_amount": "shield Amount",
+    "attribute.lightshield.shield_regen": "shield Regen",
 
     "item.minecraft.potion.effect.shield_max": "shield_max potion",
     "item.minecraft.splash_potion.effect.shield_max": "shield_max splash potion",
@@ -26,5 +26,5 @@
 
     "item.minecraft.potion.effect.shield_cooldown": "shield_Cooldown potion",
     "item.minecraft.splash_potion.effect.shield_cooldown": "shield_Cooldown splash potion",
-    "item.minecraft.lingering_potion.effect.shield_cooldown": "shield_Cooldown lingering potion",
+    "item.minecraft.lingering_potion.effect.shield_cooldown": "shield_Cooldown lingering potion"
 }

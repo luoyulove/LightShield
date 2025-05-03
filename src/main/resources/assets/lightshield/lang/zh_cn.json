@@ -12,9 +12,9 @@
     "effect.lightshield.shield_regen": "护盾恢复",
     "effect.lightshield.shield_cooldown": "护盾冷却",
 
-    "attribute.lightshield.shield_max": "这个属性决定人物最多拥有多少护盾",
-    "attribute.lightshield.shield_amount": "这个属性决定人物现在拥有多少护盾",
-    "attribute.lightshield.shield_regen": "这个属性决定人物每次恢复多少护盾",
+    "attribute.lightshield.shield_max": "护盾上限",
+    "attribute.lightshield.shield_amount": "护盾值",
+    "attribute.lightshield.shield_regen": "护盾恢复量",
 
     "item.minecraft.potion.effect.shield_max": "护盾上限药水",
     "item.minecraft.splash_potion.effect.shield_max": "喷射型护盾上限药水",
