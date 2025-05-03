@@ -16,21 +16,21 @@ public class Shield {
         Attribute attribute = ShieldAttribute.SHIELD_AMOUNT.get();
         AttributeInstance shieldAmount = player.getAttribute(attribute);
 
-        return shieldAmount.getBaseValue();
+        return shieldAmount.getValue();
     }
 
     public static Double getShieldMax(Player player){
         Attribute attribute = ShieldAttribute.SHIELD_MAX.get();
         AttributeInstance shieldMax = player.getAttribute(attribute);
 
-        return shieldMax.getBaseValue();
+        return shieldMax.getValue();
     }
 
     public static Double getShieldRegen(Player player){
         Attribute attribute = ShieldAttribute.SHIELD_REGEN.get();
         AttributeInstance shieldRegen = player.getAttribute(attribute);
 
-        return shieldRegen.getBaseValue();
+        return shieldRegen.getValue();
     }
 
     public static void setShieldAmount(Player player, Double value){
@@ -56,18 +56,21 @@ public class Shield {
 
     public static void addShieldAmount(Player player, Double value){
         Attribute attribute = ShieldAttribute.SHIELD_AMOUNT.get();
-        AttributeInstance shieldAmount = player.getAttribute(attribute);
+        AttributeInstance shieldAmountInstance = player.getAttribute(attribute);
 
         Attribute shieldMaxAb = ShieldAttribute.SHIELD_MAX.get();
         AttributeInstance shieldMax = player.getAttribute(shieldMaxAb);
 
-        if (shieldAmount.getBaseValue() > shieldMax.getBaseValue()) {
-            shieldAmount.setBaseValue(shieldMax.getBaseValue());
+        Double shieldAmount = shieldAmountInstance.getBaseValue();
+        Double shieldMaxAmount = shieldMax.getBaseValue();
+
+        if (shieldAmount + shieldMaxAmount > shieldMaxAmount) {
+            shieldAmountInstance.setBaseValue(shieldMax.getBaseValue());
             return;
         }
 
         setPlayerMaxShield(player);
-        shieldAmount.setBaseValue(shieldAmount.getBaseValue() + value);
+        shieldAmountInstance.setBaseValue(shieldAmount + value);
     }
 
     public static void setPlayerMaxShield(Player player) {
