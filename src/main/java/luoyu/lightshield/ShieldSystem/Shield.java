@@ -1,23 +1,14 @@
 package luoyu.lightshield.ShieldSystem;
 
-import luoyu.lightshield.Effects.EffectInit;
 import luoyu.lightshield.Effects.ShieldMaxEffect;
 import luoyu.lightshield.Enchantment.EnchantInit;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-
-import static luoyu.lightshield.LightShield.MODID;
-
 
 
 public class Shield {
@@ -67,6 +58,14 @@ public class Shield {
         Attribute attribute = ShieldAttribute.SHIELD_AMOUNT.get();
         AttributeInstance shieldAmount = player.getAttribute(attribute);
 
+        Attribute shieldMaxAb = ShieldAttribute.SHIELD_MAX.get();
+        AttributeInstance shieldMax = player.getAttribute(shieldMaxAb);
+
+        if (shieldAmount.getBaseValue() > shieldMax.getBaseValue()) {
+            shieldAmount.setBaseValue(shieldMax.getBaseValue());
+            return;
+        }
+
         setPlayerMaxShield(player);
         shieldAmount.setBaseValue(shieldAmount.getBaseValue() + value);
     }
@@ -93,6 +92,6 @@ public class Shield {
         Double Amplifier = 1 + (enchantmentLevel * 0.05) + (EffectLevel * 0.1);
         Double MaxShieldAmount = (Shield.getShieldMax(player) * Amplifier);
 
-        setShieldAmount(player, MaxShieldAmount);
+        setShieldMax(player, MaxShieldAmount);
     }
 }
