@@ -58,7 +58,7 @@ public class Shield {
         Double shieldAmount = getShieldAmount(player);
         Double shieldMaxAmount = getShieldMax(player);
 
-        Double shieldAmountNew = shieldMaxAmount + value;
+        Double shieldAmountNew = shieldAmount + value;
 
         if (shieldAmountNew + shieldMaxAmount > shieldMaxAmount) {
             setShieldAmount(player, shieldMaxAmount);
