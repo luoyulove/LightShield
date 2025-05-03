@@ -55,22 +55,16 @@ public class Shield {
     }
 
     public static void addShieldAmount(Player player, Double value){
-        Attribute attribute = ShieldAttribute.SHIELD_AMOUNT.get();
-        AttributeInstance shieldAmountInstance = player.getAttribute(attribute);
+        Double shieldAmount = getShieldAmount(player);
+        Double shieldMaxAmount = getShieldMax(player);
 
-        Attribute shieldMaxAb = ShieldAttribute.SHIELD_MAX.get();
-        AttributeInstance shieldMax = player.getAttribute(shieldMaxAb);
+        Double shieldAmountNew = shieldMaxAmount + value;
 
-        Double shieldAmount = shieldAmountInstance.getBaseValue();
-        Double shieldMaxAmount = shieldMax.getBaseValue();
-
-        if (shieldAmount + shieldMaxAmount > shieldMaxAmount) {
-            shieldAmountInstance.setBaseValue(shieldMax.getBaseValue());
+        if (shieldAmountNew + shieldMaxAmount > shieldMaxAmount) {
+            setShieldAmount(player, shieldMaxAmount);
             return;
         }
-
-        setPlayerMaxShield(player);
-        shieldAmountInstance.setBaseValue(shieldAmount + value);
+        setShieldAmount(player, shieldAmountNew);
     }
 
     public static void setPlayerMaxShield(Player player) {
