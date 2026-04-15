@@ -50,7 +50,7 @@ public class DefendAttackEvent {
                 float finalDamage = (float) Math.max(reducedDamage - shieldAmount, 0);
 
                 if (damageToShield >= shieldAmount) {
-                    double shieldCooldownTime = (shieldMax / player.getMaxHealth()) * 8 + 3;  // 计算冷却时间
+                    double shieldCooldownTime = (shieldMax / player.getMaxHealth()) * 8 + 4;  // 计算冷却时间
                     player.addEffect(new MobEffectInstance(EffectInit.SHIELD_COOLDOWN.get(), (int) Math.min(shieldCooldownTime * 20, 240), 0, false, true));
                 }
 
