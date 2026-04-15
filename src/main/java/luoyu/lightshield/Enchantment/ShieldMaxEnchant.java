@@ -18,11 +18,11 @@ public class ShieldMaxEnchant extends Enchantment {
     }
     @Override
     public int getMinCost(int level){
-        return level * 18;
+        return level * 6;
     }
     @Override
     public int getMaxCost(int level){
-        return this.getMinCost(level) + 24;
+        return this.getMinCost(level) + 12;
     }
     @Override
     public int getMinLevel(){
@@ -30,6 +30,6 @@ public class ShieldMaxEnchant extends Enchantment {
     }
     @Override
     public int getMaxLevel(){
-        return 2;
+        return 4;
     }
 }

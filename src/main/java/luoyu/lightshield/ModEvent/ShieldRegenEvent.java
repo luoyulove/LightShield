@@ -1,4 +1,4 @@
-package luoyu.lightshield.BattleEvent;
+package luoyu.lightshield.ModEvent;
 
 import luoyu.lightshield.Effects.ShieldCooldownEffect;
 import luoyu.lightshield.Effects.ShieldRegenEffect;
@@ -29,7 +29,6 @@ public class ShieldRegenEvent {
                     if (slot.getType() == EquipmentSlot.Type.ARMOR) {
                         ItemStack armorStack = player.getItemBySlot(slot);
                         if (!armorStack.isEmpty()) {
-                            enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_DEFENSE.get(), player);
                             enchantmentLevel += EnchantmentHelper.getEnchantmentLevel(EnchantInit.SHIELD_REGEN.get(), player);
                         }
                     }

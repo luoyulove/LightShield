@@ -1,4 +1,4 @@
-package luoyu.lightshield.BattleEvent;
+package luoyu.lightshield.ModEvent;
 
 import luoyu.lightshield.Enchantment.EnchantInit;
 import luoyu.lightshield.ShieldSystem.ShieldAttribute;
@@ -52,7 +52,7 @@ public class EquipEvent {
         shieldMaxAttribute.removeModifier(SHIELD_MAX_ENCHANTMENT_UUID);
 
         if (enchantmentLevel > 0) {
-            AttributeModifier modifier = getAttributeModifier(enchantmentLevel, shieldMaxAttribute, SHIELD_MAX_ENCHANTMENT_UUID, "Shield Max Enchantment Bonus");
+            AttributeModifier modifier = equipShieldMaxModifier(enchantmentLevel, shieldMaxAttribute, SHIELD_MAX_ENCHANTMENT_UUID, "Shield Max Enchantment Bonus");
             shieldMaxAttribute.addTransientModifier(modifier);
         }
     }
@@ -64,21 +64,30 @@ public class EquipEvent {
         shieldRegenAttribute.removeModifier(SHIELD_REGEN_ENCHANTMENT_UUID);
 
         if (enchantmentLevel > 0) {
-            AttributeModifier modifier = getAttributeModifier(enchantmentLevel, shieldRegenAttribute, SHIELD_REGEN_ENCHANTMENT_UUID, "Shield Regen Enchantment Bonus");
+            AttributeModifier modifier = equipShieldRegenModifier(enchantmentLevel, shieldRegenAttribute, SHIELD_REGEN_ENCHANTMENT_UUID, "Shield Regen Enchantment Bonus");
             shieldRegenAttribute.addTransientModifier(modifier);
         }
     }
 
-    private static @NotNull AttributeModifier getAttributeModifier(int enchantmentLevel, AttributeInstance attribute, UUID uuid, String name) {
-        double percentBonus = 0.10 * enchantmentLevel; // 每级增加10%
-        double baseValue = attribute.getBaseValue();
-        double amount = baseValue * percentBonus;
+    private static @NotNull AttributeModifier equipShieldMaxModifier(int enchantmentLevel, AttributeInstance attribute, UUID uuid, String name) {
+        double percentBonus = 0.5 * enchantmentLevel; // 每级+50%，装备总和附魔16，最多+400%
 
         return new AttributeModifier(
                 uuid,
                 name,
-                amount,
-                AttributeModifier.Operation.MULTIPLY_BASE
+                percentBonus,
+                AttributeModifier.Operation.MULTIPLY_TOTAL
+        );
+    }
+
+    private static @NotNull AttributeModifier equipShieldRegenModifier(int enchantmentLevel, AttributeInstance attribute, UUID uuid, String name) {
+        double percentBonus = 0.125 * enchantmentLevel; // 每级+12.5%，装备总和附魔16，最多+200%
+
+        return new AttributeModifier(
+                uuid,
+                name,
+                percentBonus,
+                AttributeModifier.Operation.MULTIPLY_TOTAL
         );
     }
 }

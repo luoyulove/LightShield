@@ -40,20 +40,6 @@ public class Shield {
         shieldAmount.setBaseValue(value);
     }
 
-    public static void setShieldMax(Player player, Double value){
-        Attribute attribute = ShieldAttribute.SHIELD_MAX.get();
-        AttributeInstance shieldMax = player.getAttribute(attribute);
-
-        shieldMax.setBaseValue(value);
-    }
-
-    public static void setShieldRegen(Player player, Double value){
-        Attribute attribute = ShieldAttribute.SHIELD_REGEN.get();
-        AttributeInstance shieldRegen = player.getAttribute(attribute);
-
-        shieldRegen.setBaseValue(value);
-    }
-
     public static void addShieldAmount(Player player, Double value){
         Double shieldAmount = getShieldAmount(player);
         Double shieldMaxAmount = getShieldMax(player);
@@ -65,30 +51,5 @@ public class Shield {
             return;
         }
         setShieldAmount(player, shieldAmountNew);
-    }
-
-    public static void setPlayerMaxShield(Player player) {
-        int enchantmentLevel = 0;
-        int EffectLevel = 0;
-
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            if (slot.getType() == EquipmentSlot.Type.ARMOR) {
-                ItemStack armorStack = player.getItemBySlot(slot);
-                if (!armorStack.isEmpty()) {
-                    enchantmentLevel += EnchantmentHelper.getTagEnchantmentLevel(EnchantInit.SHIELD_MAX.get(), armorStack);
-                }
-            }
-        }
-
-        for (MobEffectInstance effect : player.getActiveEffects()){
-            if (effect.getEffect() instanceof ShieldMaxEffect){
-                EffectLevel = effect.getAmplifier();
-            }
-        }
-
-        Double Amplifier = 1 + (enchantmentLevel * 0.05) + (EffectLevel * 0.1);
-        Double MaxShieldAmount = (Shield.getShieldMax(player) * Amplifier);
-
-        setShieldMax(player, MaxShieldAmount);
     }
 }

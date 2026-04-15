@@ -1,4 +1,4 @@
-package luoyu.lightshield.BattleEvent;
+package luoyu.lightshield.ModEvent;
 
 import luoyu.lightshield.Effects.EffectInit;
 import luoyu.lightshield.Enchantment.EnchantInit;
@@ -38,9 +38,9 @@ public class DefendAttackEvent {
                 }
 
                 float damageReducePercent = 1 - (0.025F * enchantmentLevel);
-                float reducedDamage = originalDamage * damageReducePercent;
+                float reducedDamage = originalDamage * Math.min(damageReducePercent, 0.4F);
 
-                if (player.getAbsorptionAmount() <= 1 && reducedDamage > (shieldMax * 0.2)) {
+                if (player.getAbsorptionAmount() < 1) {
                     player.addEffect(new MobEffectInstance(EffectInit.SHIELD_COOLDOWN.get(), 40, 0, false, true));
                 }
                 double damageToShield = Math.min(shieldAmount, reducedDamage);
